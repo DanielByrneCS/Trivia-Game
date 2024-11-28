@@ -1,10 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.MainPage">
+             x:Class="MauiApp1.MainPage"
+             Title="Trivia Game"
+             >
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout HorizontalOptions="Center">
+            <Label 
+                Text="Welcome to the Trivia Game" 
+                FontSize="30" 
+                FontFamily="ComicNeue"/>
+            <Label 
+                Text="Please choose your settings and play!" 
+                FontSize="20" 
+                FontFamily="ComicNeue"/>
             
         </VerticalStackLayout>
     </ScrollView>
