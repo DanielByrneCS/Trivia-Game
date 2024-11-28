@@ -4,18 +4,51 @@
              x:Class="MauiApp1.MainPage"
              Title="Trivia Game"
              >
+    <ContentPage.Resources>
+        <Style TargetType ="Label">
+            <Setter Property ="FontFamily" Value ="ApeMount"/>
+        </Style>
+        <Style TargetType ="Button">
+            <Setter Property ="FontFamily" Value ="ApeMount"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="BackgroundColor" Value="AliceBlue"/>
+            <Setter Property="TextColor" Value="Navy"/>
+        </Style>
+
+    </ContentPage.Resources >
 
     <ScrollView>
         <VerticalStackLayout HorizontalOptions="Center">
             <Label 
                 Text="Welcome to the Trivia Game" 
                 FontSize="30" 
-                FontFamily="ComicNeue"/>
+                />
             <Label 
                 Text="Please choose your settings and play!" 
                 FontSize="20" 
-                FontFamily="ComicNeue"/>
-            
+                />
+            <Picker x:Name="difficulty" 
+                    Title="Difficulty">
+                <Picker.Items>
+                    <x:String>Easy</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>Hard</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Picker x:Name="type" 
+        Title="Multiple Choice / True or False">
+                <Picker.Items>
+                    <x:String>Multiple Choice</x:String>
+                    <x:String>True/False</x:String>
+                </Picker.Items>
+            </Picker>
+            <HorizontalStackLayout x:Name="buttonLayout">
+                <Button Text="5 Questions" Clicked="NumberQuestions"/>
+                <Button Text="10 Questions" Clicked="NumberQuestions"/>
+                <Button Text="15 Questions" Clicked="NumberQuestions"/>
+                <Button Text="20 Questions" Clicked="NumberQuestions"/>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 

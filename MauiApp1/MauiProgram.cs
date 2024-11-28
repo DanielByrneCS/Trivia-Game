@@ -14,6 +14,7 @@ namespace MauiApp1
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("ComicNeue-Regular.ttf", "ComicNeue");
+                    fonts.AddFont("ApeMount.ttf", "ApeMount");
                 });
 
 #if DEBUG
