@@ -16,16 +16,21 @@
             if (selectedButton != null && selectedButton != button)
             {
                 
-                selectedButton.BackgroundColor = Colors.AliceBlue;
-                selectedButton.TextColor = Colors.Navy;
+                selectedButton.BackgroundColor = (Color)Resources["SecondaryColor"];
+                selectedButton.TextColor = (Color)Resources["PrimaryTextColor"];
             }
 
             selectedButton = button;
+
+            var primaryColor = (Color)Resources["PrimaryColor"];
             selectedButton.BackgroundColor = Colors.Green;
             selectedButton.TextColor = Colors.White;
         }
 
+        private void Button_Clicked(object sender, EventArgs e)
+        {
 
+        }
     }
 
 }

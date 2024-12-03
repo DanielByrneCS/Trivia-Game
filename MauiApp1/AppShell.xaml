@@ -6,7 +6,20 @@
     xmlns:local="clr-namespace:MauiApp1"
     Shell.FlyoutBehavior="Disabled"
     Title="MauiApp1">
-
+    <TabBar>
+        <Tab Title="Home"
+            Icon="{StaticResource Cog}">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+        <Tab Title="Previous Games"
+            Icon="{StaticResource Cog}">
+            <ShellContent ContentTemplate="{DataTemplate local:Results}" />
+        </Tab>
+        <Tab Title="Settings"
+             Icon="{StaticResource Cog}">
+            <ShellContent ContentTemplate="{DataTemplate local:Settings}"/>
+        </Tab>
+    </TabBar>
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
