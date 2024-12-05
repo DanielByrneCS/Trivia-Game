@@ -5,6 +5,7 @@
              Title="Trivia Game"
              BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
+    <!--#region NewRegion
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
+    endregion-->
 
     <ScrollView>
         

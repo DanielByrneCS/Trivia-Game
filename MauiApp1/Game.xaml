@@ -2,10 +2,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Game"
-             Title="Game">
-    <VerticalStackLayout>
-        <Label x:Name="difficult" Text="Defualt"/>
-        <Label x:Name="typea" Text="defualtype"/>
-        <Label x:Name="questions" Text="defuaquest"/>
+             Title="Game"
+              BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+             >
+    <VerticalStackLayout HorizontalOptions="Center">
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+            <Label Text="{Binding NumberOfQuestions}" 
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"/>
+            <Label Text="{Binding Difficulty}"
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"/>
+            <Label Text="{Binding GameType}"
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        </HorizontalStackLayout>
+    <Label x:Name="questionNumber" 
+           Text="" 
+           FontSize="Medium"
+           TextColor="{DynamicResource PrimaryTextColor}"/>
+    <Label x:Name="questionTitle"
+           Text=""
+           FontSize="Large"
+           TextColor="{DynamicResource PrimaryTextColor}"/>
+
     </VerticalStackLayout>
 </ContentPage>
