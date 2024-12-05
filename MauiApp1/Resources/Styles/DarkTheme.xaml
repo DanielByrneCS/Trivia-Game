@@ -5,8 +5,8 @@
 
     <!--Below is dark theme-->
 
-        <Color x:Key="PrimaryBackgroundColor">#222222</Color>
-        <Color x:Key="SecondaryBackgroundColor">#333333</Color>
+        <Color x:Key="PrimaryBackgroundColor">#111111</Color>
+    <Color x:Key="SecondaryBackgroundColor">#FF6347</Color>
         <Color x:Key="TertiaryBackgroundColor">#444444</Color>
 
         <Color x:Key="PrimaryTextColor">#FFFFFF</Color>

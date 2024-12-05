@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.MainPage"
              Title="Trivia Game"
-             BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
+             BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
     <Application.Resources>
         <ResourceDictionary>
@@ -20,9 +20,15 @@
             <Label 
                 Text="Please choose your settings and play!" 
                 FontSize="20" 
+                TextColor="{DynamicResource PrimaryTextColor}"
                 />
             <Picker x:Name="difficulty" 
-                    Title="Difficulty">
+                    Title="Difficulty"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
+                    TitleColor="{DynamicResource SecondaryTextColor}"
+                    SelectedItem="Medium"
+                    >
                 <Picker.Items>
                     <x:String>Easy</x:String>
                     <x:String>Medium</x:String>
@@ -31,9 +37,14 @@
             </Picker>
 
             <Picker x:Name="type" 
-        Title="Multiple Choice / True or False">
+                    Title="Multiple Choice / True or False"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
+                    TitleColor="{DynamicResource SecondaryTextColor}"
+                    SelectedItem="{Binding SelectedItem}"
+                    >
                 <Picker.Items>
-                    <x:String>Multiple Choice</x:String>
+                    <x:String >Multiple Choice</x:String>
                     <x:String>True/False</x:String>
                 </Picker.Items>
             </Picker>
@@ -43,7 +54,8 @@
                 <Button Text="15 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
                 <Button Text="20 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
             </HorizontalStackLayout>
-            <Button Text="Play!" Clicked="Button_Clicked" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large"/>
+            <Label FontSize="Header" Text="Please enter total amount of questions" x:Name="questionLabel" TextColor="{DynamicResource PrimaryTextColor}"/>
+            <Button Text="Play!" Clicked="goButton" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large"/>
         </VerticalStackLayout>
     </ScrollView>
 

@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Settings"
              Title="Settings"
-             BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
+             BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
     <VerticalStackLayout>
-        <Button Background="{DynamicResource PrimaryBackgroundColor}"
+        <Button Background="{DynamicResource TertiaryBackgroundColor}"
         TextColor="{DynamicResource PrimaryTextColor}"
         Text="Change Theme" Clicked="ThemeButton"/>
     </VerticalStackLayout>

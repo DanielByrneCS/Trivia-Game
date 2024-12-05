@@ -4,6 +4,8 @@
              x:Class="MauiApp1.Game"
              Title="Game">
     <VerticalStackLayout>
-        
+        <Label x:Name="difficult" Text="Defualt"/>
+        <Label x:Name="typea" Text="defualtype"/>
+        <Label x:Name="questions" Text="defuaquest"/>
     </VerticalStackLayout>
 </ContentPage>
