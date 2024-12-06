@@ -26,6 +26,6 @@
            Text=""
            FontSize="Large"
            TextColor="{DynamicResource PrimaryTextColor}"/>
-
+        <StackLayout x:Name="buttonLayout" />
     </VerticalStackLayout>
 </ContentPage>

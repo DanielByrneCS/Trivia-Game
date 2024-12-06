@@ -27,6 +27,12 @@ public partial class Game : ContentPage
 
     private HttpClient httpClient;
     QuestionResponse questionResponse;
+    string boolOrMCQ;
+    Color primaryTextColor;
+    Color secondaryBackgroundColor;
+    
+    int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
+
 
     public string Difficulty {  get; set; }
     public string NumberOfQuestions {  get; set; }
@@ -36,11 +42,11 @@ public partial class Game : ContentPage
         InitializeComponent();
         httpClient = new HttpClient();
         GetQuestions(difficulty, numQuestions, type );
-        GameLoop(difficulty, numQuestions, type);
+        GameLoop();
         QuestionsLabel(numQuestions);
         DifficultyLabel(difficulty);
         TypeLabel(type);
-        BindingContext = this;''
+        BindingContext = this;
 
     }
 
@@ -69,9 +75,11 @@ public partial class Game : ContentPage
         {
             case 0:
                 GameType = "Multiple Choice";
+                boolOrMCQ = "multiple";
                 break;
             case 1:
                 GameType = "True/False";
+                boolOrMCQ = "boolean";
                 break;
             default:
                 GameType = "This shouldn't happen";
@@ -101,34 +109,106 @@ public partial class Game : ContentPage
                 break;
         }
     }
-    private async void DisplayQuestion()
+    
+
+    private async void GameLoop()
     {
-        await Task.Delay(1000);
-        foreach (Question question in questionResponse.results)
+        if(currentQuestion == 0)
+            await Task.Delay(1000);
+        buttonLayout.Children.Clear();
+        questionTitle.Text = questionResponse.results[currentQuestion].question;
+        List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
+        possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
+        possibleAnswers.Sort();
+        if(Preferences.Get("isLightTheme", false))
         {
-            questionTitle.Text += question.question + "\n";
+            primaryTextColor = Color.FromArgb("#151515");
+            secondaryBackgroundColor = Color.FromArgb("FF6347");
         }
-        
-    }
-
-    private async void GameLoop(int difficulty, int numQuestions, int type)
-    {
-
-        for(int i = 0; i < numQuestions; i++)
+        else
         {
+            primaryTextColor = Color.FromArgb("#FFFFFF");
+            secondaryBackgroundColor = Color.FromArgb("FF6347");
 
         }
+        HorizontalStackLayout view1 = new HorizontalStackLayout();
+        HorizontalStackLayout view2 = new HorizontalStackLayout();
+        for (int j = 0; j < questionResponse.results[currentQuestion].incorrect_answers.Count; j++)
+        {
+                
+            Button answer = new Button
+            {
+                Text = possibleAnswers[j],
+                TextColor = primaryTextColor,
+                BackgroundColor = secondaryBackgroundColor
+            };
+            answer.Clicked += AnswerClicked;
+                
+            if(j <= 1)
+                view1.Children.Add(answer);
+            else
+                view2.Children.Add(answer);
+                
+
+        }
+        buttonLayout.Children.Add(view1);
+        buttonLayout.Children.Add(view2);
+    
        
 
+    }
+    private void AnswerClicked(object sender, EventArgs e)
+    {
+      
+        Button button = (Button)sender;
+
+        StackLayout buttonLayout = (StackLayout)button.Parent.Parent;
+
+        // Below is if user selects correct answer to question
+        if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
+        {
+            if (questionResponse.results.Count > currentQuestion)
+            {
+                currentQuestion++;
+                QuestionsCorrect++;
+                GameLoop();
+            }
+            else
+            {
+                QuestionsCorrect++;
+                GameEnd(QuestionsCorrect, QuestionsIncorrect);
+             
+            }
+        }
+        else
+        {
+            if (questionResponse.results.Count > currentQuestion)
+            {
+                currentQuestion++;
+                QuestionsIncorrect++;
+                GameLoop();
+            }
+            else
+            {
+                QuestionsIncorrect++;
+                GameEnd(QuestionsCorrect, QuestionsIncorrect);
+
+            }
+        }
+    }
+
+    private async void GameEnd(int questionsCorrect, int questionsIncorrect)
+    {
+        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType));
     }
 
     string APILinkCreator(int difficulty, int numQuestions, int questionType)
     {
         //type: MCQ = 0, True/False = 1
         //Difficulty: Easy = 0, Medium = 1, Hard = 2
+        string url = "https://opentdb.com/api.php?amount=" + numQuestions + "&difficulty=" + difficultyLevels[difficulty] + "&type=" + typeDict[questionType];
 
-        return "https://opentdb.com/api.php?amount=" + numQuestions + "&difficulty=" + difficultyLevels[difficulty][1] + "&type=" + typeDict[questionType][1]; 
-        
+        return url;
 
     }
 
@@ -136,8 +216,8 @@ public partial class Game : ContentPage
     {
         try
         {
-    
-            var response = await httpClient.GetAsync("https://opentdb.com/api.php?amount=10&difficulty=medium");
+
+            var response = await httpClient.GetAsync(APILinkCreator(difficulty, numQuestions,questionType));
             if (response.IsSuccessStatusCode)
             {
                 string contents = await response.Content.ReadAsStringAsync();
