@@ -10,7 +10,7 @@
     <ScrollView>
         
         <VerticalStackLayout HorizontalOptions="Center">
-            <Image Source="triviadark.png" WidthRequest="400"/>
+            <Image Source="triviadark.png" WidthRequest="400" x:Name="logo"/>
             <Label 
                 Text="Please choose your settings and play!" 
                 FontSize="Medium" 
@@ -54,7 +54,39 @@
                     </Picker.Items>
                 </Picker>
             </Border>
-            <Grid>
+            <!-- Below is grid for players-->
+            <Label Text="1 Player Selected" 
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Center"
+                   x:Name="playersLabel"/>
+            <HorizontalStackLayout HorizontalOptions="Center">
+
+                <Image x:Name="player1" Source="selectedplayer.png" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Image_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="player2" Source="unselectedplayer.png" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Image_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="player3" Source="unselectedplayer.png" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Image_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="player4" Source="unselectedplayer.png" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Image_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </HorizontalStackLayout>
+            
+            
+            <!-- Below is grid for buttons-->
+            <Grid Margin="0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -63,7 +95,9 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="0" 
+                
+            
+            <Button Grid.Row="0" 
                         Grid.Column="0" 
                         Text="5 Questions" 
                         Clicked="NumberQuestions" 
@@ -92,7 +126,7 @@
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
             </Grid>
-         
+            
             <Label FontSize="Large" 
                    Text="Please enter total amount of questions" 
                    x:Name="questionLabel" 

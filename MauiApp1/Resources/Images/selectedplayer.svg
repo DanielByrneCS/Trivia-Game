@@ -1,0 +1,25 @@
+<svg width="337.5" height="370.499997" xmlns="http://www.w3.org/2000/svg" version="1.0" preserveAspectRatio="xMidYMid meet" zoomAndPan="magnify">
+ <defs>
+  <clipPath id="e9c29c45b1">
+   <path id="svg_1" clip-rule="nonzero" d="m70,233l34,0l0,117.28906l-34,0l0,-117.28906zm0,0"/>
+  </clipPath>
+  <clipPath id="b7e45482de">
+   <path id="svg_2" clip-rule="nonzero" d="m71,200.51172l32,0l0,31.48828l-32,0l0,-31.48828zm0,0"/>
+  </clipPath>
+  <clipPath id="281e78d000">
+   <path id="svg_3" clip-rule="nonzero" d="m78,0.02344l181,0l0,191.97656l-181,0l0,-191.97656zm0,0"/>
+  </clipPath>
+  <clipPath id="198ac7bffc">
+   <path id="svg_4" clip-rule="nonzero" d="m0,192l337,0l0,177.97656l-337,0l0,-177.97656zm0,0"/>
+  </clipPath>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_13" clip-path="url(#198ac7bffc)">
+   <path id="svg_14" fill-rule="nonzero" d="m235.89453,192.76953c-17.41015,13.26953 -39.13672,21.16016 -62.66797,21.16016l-9.45312,0c-23.53516,0 -45.26172,-7.89453 -62.67188,-21.16016c-56.86328,9.19141 -100.28125,58.47656 -100.28125,117.92578c0,32.65625 75.07032,59.14063 167.67969,59.14063c92.60547,0 167.67969,-26.48438 167.67969,-59.14063c0,-59.44922 -43.42188,-108.73437 -100.28516,-117.92578zm0,0" fill="#0097b2"/>
+  </g>
+  <g id="svg_11" clip-path="url(#281e78d000)">
+   <path id="svg_12" fill-rule="nonzero" d="m168.5,191.85156c49.50391,0 89.77344,-52.54297 89.77344,-102.04687c0,-49.5 -40.26953,-89.78125 -89.77344,-89.78125c-49.50391,0 -89.77734,40.28125 -89.77734,89.78125c0.00781,49.5 40.27734,102.04687 89.77734,102.04687zm0,0" fill="#0097b2"/>
+  </g>
+ </g>
+</svg>

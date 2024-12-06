@@ -7,10 +7,15 @@ namespace MauiApp1
         private Button selectedButton;
         int numQuestions = 0;
         bool firstRun = true;
-        
+        private int selectedPlayers = 1;
+
         public MainPage()
         {
            InitializeComponent();
+            if (Preferences.Get("isLightTheme", false))
+                logo.Source = ImageSource.FromFile("trivialight.png");
+            else
+                logo.Source = ImageSource.FromFile("triviadark.png");
             BindingContext = this;
         }
 
@@ -33,6 +38,7 @@ namespace MauiApp1
             {
                 Application.Current.Resources.MergedDictionaries.Clear();
                 Application.Current.Resources.MergedDictionaries.Add(new LightTheme());
+                logo.Source = ImageSource.FromFile("trivialight.png");
                 isLightTheme = true;
 
             }
@@ -41,6 +47,7 @@ namespace MauiApp1
 
                 Application.Current.Resources.MergedDictionaries.Clear();
                 Application.Current.Resources.MergedDictionaries.Add(new DarkTheme());
+                logo.Source = ImageSource.FromFile("triviadark.png");
                 isLightTheme = false;
             }
         }
@@ -85,9 +92,14 @@ namespace MauiApp1
         {
             try
             {
-                if (difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null)
+                // 1 player game
+                if (difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null && selectedPlayers == 1)
                 {
                     await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
+                }
+                else if(difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null && selectedPlayers != 1)
+                {
+                    await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
                 }
                 else
                 {
@@ -101,6 +113,53 @@ namespace MauiApp1
             }
          
         }
+
+
+        
+
+        private void Image_Tapped(object sender, TappedEventArgs e)
+        {
+            // This tap gesture on the pictures allows user to select players
+            // Spices it up as opposed to a lot of drop down menus
+            selectedPlayers++;
+
+            if (selectedPlayers == 1)
+            {
+                
+                player1.Source = ImageSource.FromFile("selectedplayer.png");
+                player2.Source = ImageSource.FromFile("unselectedplayer.png");
+                player3.Source = ImageSource.FromFile("unselectedplayer.png");
+                player4.Source = ImageSource.FromFile("unselectedplayer.png");
+                playersLabel.Text = "1 Player Selected";
+            }
+            else if (selectedPlayers == 2)
+            {
+               
+                player1.Source = ImageSource.FromFile("selectedplayer.png");
+                player2.Source = ImageSource.FromFile("selectedplayer.png");
+                playersLabel.Text = "2 Players Selected";
+            }
+            else if (selectedPlayers == 3)
+            {
+                
+                player1.Source = ImageSource.FromFile("selectedplayer.png");
+                player2.Source = ImageSource.FromFile("selectedplayer.png");
+                player3.Source = ImageSource.FromFile("selectedplayer.png");
+                playersLabel.Text = "3 Player Selected";
+            }
+            else if (selectedPlayers == 4)
+            {
+                
+                player1.Source = ImageSource.FromFile("selectedplayer.png");
+                player2.Source = ImageSource.FromFile("selectedplayer.png");
+                player3.Source = ImageSource.FromFile("selectedplayer.png");
+                player4.Source = ImageSource.FromFile("selectedplayer.png");
+                selectedPlayers = 0; // variable resets to loop
+                playersLabel.Text = "4 Player Selected";
+            }
+        }
+
+       
     }
 
 }

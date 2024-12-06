@@ -12,4 +12,11 @@ public partial class ResultsPage : ContentPage
         questionsCorrect.Text += QuestionsCorrect.ToString();
         questionsIncorrect.Text += QuestionsIncorrect.ToString();
     }
+
+    public ResultsPage(int QuestionsCorrect, int QuestionsIncorrect, string difficulty, string numberOfQuestions, string questionType, int numberOfPlayers)
+    {
+        InitializeComponent();
+        questionsCorrect.Text += QuestionsCorrect.ToString();
+        questionsIncorrect.Text += QuestionsIncorrect.ToString();
+    }
 }

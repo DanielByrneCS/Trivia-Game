@@ -1,15 +1,9 @@
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace MauiApp1;
 
-public partial class Game : ContentPage
+public partial class MPGame : ContentPage
 {
     // Dictionary helps convert int difficulty to string for api url creation
     Dictionary<int, string> difficultyLevels = new Dictionary<int, string>
@@ -30,25 +24,35 @@ public partial class Game : ContentPage
     string boolOrMCQ;
     Color primaryTextColor;
     Color secondaryBackgroundColor;
-    
+
     int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
 
 
-    public string Difficulty {  get; set; }
-    public string NumberOfQuestions {  get; set; }
+    public string Difficulty { get; set; }
+    public string NumberOfQuestions { get; set; }
     public string GameType { get; set; }
 
-
-
-    public Game(int difficulty, int numQuestions, int type)
+    private int numOfPlayers;
+    public int currentPlayer;
+    private int difficulty;
+    private int numQuestions;
+    private int questionType;
+    
+    // I felt another class for multiplayer, although repeating code, was better
+    // Game.xaml.cs is big enough to navigate so this will avoid headaches, would be very easy to combine them if need
+    public MPGame(int difficulty, int numQuestions, int questionType, int numOfPlayers)
     {
+        this.numOfPlayers = numOfPlayers;
+        this.difficulty = difficulty;
+        this.numQuestions = numQuestions;
+        this.questionType = questionType;
         InitializeComponent();
         httpClient = new HttpClient();
-        GetQuestions(difficulty, numQuestions, type );
-        GameLoop();
+        GetQuestions();
+        GameLoop(currentPlayer);
         QuestionsLabel(numQuestions);
         DifficultyLabel(difficulty);
-        TypeLabel(type);
+        TypeLabel(questionType);
         BindingContext = this;
 
     }
@@ -112,17 +116,18 @@ public partial class Game : ContentPage
                 break;
         }
     }
-    
 
-    private async void GameLoop()
+
+    private async void GameLoop(int currPlayer)
     {
+        currentPlayerLabel.Text = "Current Player: " + (currentPlayer + 1);
         if (currentQuestion == 0)
             await Task.Delay(1000);
         else
         {
             IsBusy = true;
             await Task.Delay(500);
-            
+
         }
         buttonLayout.Children.Clear();
         questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
@@ -131,7 +136,7 @@ public partial class Game : ContentPage
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
         possibleAnswers.Sort();
-        if(Preferences.Get("isLightTheme", false))
+        if (Preferences.Get("isLightTheme", false))
         {
             primaryTextColor = Color.FromArgb("#151515");
             secondaryBackgroundColor = Color.FromArgb("FF6347");
@@ -157,26 +162,27 @@ public partial class Game : ContentPage
                 TextColor = primaryTextColor,
                 BackgroundColor = secondaryBackgroundColor,
                 HorizontalOptions = LayoutOptions.Center,
-                FontSize = 30
+                FontSize = 30,
+                Margin = 10
             };
             answer.Clicked += AnswerClicked;
-                
-            if(j <= 1)
+
+            if (j <= 1)
                 view1.Children.Add(answer);
             else
                 view2.Children.Add(answer);
-                
+
 
         }
         buttonLayout.Children.Add(view1);
         buttonLayout.Children.Add(view2);
-    
-       
+
+
 
     }
-    private void AnswerClicked(object sender, EventArgs e)
+    private async void AnswerClicked(object sender, EventArgs e)
     {
-      
+
         Button button = (Button)sender;
 
         StackLayout buttonLayout = (StackLayout)button.Parent.Parent;
@@ -184,7 +190,7 @@ public partial class Game : ContentPage
         // Below is if user selects correct answer to question
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
-            if (questionResponse.results.Count > currentQuestion +1)
+            if (questionResponse.results.Count > currentQuestion + 1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
@@ -192,7 +198,7 @@ public partial class Game : ContentPage
                 QuestionsCorrect++;
                 questionsCor.Text = QuestionsCorrect.ToString();
                 questionTitle.Text = "";
-                GameLoop();
+                GameLoop(currentPlayer);
             }
             else
             {
@@ -200,13 +206,21 @@ public partial class Game : ContentPage
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                GameEnd(QuestionsCorrect, QuestionsIncorrect);
-             
+                if(currentPlayer == numOfPlayers - 1)
+                    GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                else
+                {
+                    await GetQuestions();
+                    currentPlayer++;
+                    currentQuestion = 0;
+                    GameLoop(currentPlayer);
+                    
+                }
             }
         }
         else
         {
-            if (questionResponse.results.Count > currentQuestion +1)
+            if (questionResponse.results.Count > currentQuestion + 1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Red;
@@ -214,14 +228,24 @@ public partial class Game : ContentPage
                 QuestionsIncorrect++;
                 questionsIncor.Text = QuestionsIncorrect.ToString();
                 questionTitle.Text = "";
-                GameLoop();
+                GameLoop(currentPlayer);
             }
             else
             {
                 button.BackgroundColor = Colors.Red;
                 QuestionsIncorrect++;
                 questionTitle.Text = "";
-                GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                if (currentPlayer == numOfPlayers - 1)
+                    GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                else
+                {
+                    await GetQuestions();
+                    currentPlayer++;
+                    currentQuestion = 0;
+                    GameLoop(currentPlayer);
+                }
+                    
+                    
 
             }
         }
@@ -229,7 +253,7 @@ public partial class Game : ContentPage
 
     private async void GameEnd(int questionsCorrect, int questionsIncorrect)
     {
-        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType));
+        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, numOfPlayers));
     }
 
     string APILinkCreator(int difficulty, int numQuestions, int questionType)
@@ -242,26 +266,26 @@ public partial class Game : ContentPage
 
     }
 
-    public async Task GetQuestions(int difficulty, int numQuestions, int questionType)
+    public async Task GetQuestions()
     {
         try
         {
 
-            var response = await httpClient.GetAsync(APILinkCreator(difficulty, numQuestions,questionType));
+            var response = await httpClient.GetAsync(APILinkCreator(difficulty, numQuestions, questionType));
             if (response.IsSuccessStatusCode)
             {
                 string contents = await response.Content.ReadAsStringAsync();
-                
+
                 // Below line from Json2CSharp 
                 questionResponse = JsonSerializer.Deserialize<QuestionResponse>(contents);
-                
+
             }
         }
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error in loading Questions", ex.Message, "OK");
         }
-    
+
     }
 
 

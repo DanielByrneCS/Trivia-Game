@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.MPGame"
+             Title="MPGame"
+              BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+             >
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Total Number of Questions:" 
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Start"
+                   Grid.Column="0"
+                   Margin="0,0,0,0"/>
+            <Label Text="{Binding NumberOfQuestions}" 
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Start"
+                   Grid.Column="0"
+                   Margin="280,0,0,0"/>
+            <Label Text="{Binding Difficulty}"
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Center"
+                   Grid.Column="1"/>
+            <Label Text="{Binding GameType}"
+                   FontSize="Medium" 
+                   TextColor="{DynamicResource PrimaryTextColor}" 
+                   HorizontalOptions="End"
+                   Grid.Column="2"/>
+        </Grid>
+        <Line/>
+        <Label Text="" 
+               FontSize="Medium"
+               TextColor="{DynamicResource PrimaryTextColor}"
+               x:Name="currentPlayerLabel"
+               HorizontalOptions="Center"/>
+            
+        <Label x:Name="questionNumber" 
+           Text="" 
+           FontSize="Medium"
+           TextColor="{DynamicResource PrimaryTextColor}"/>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Orange"/>
+        <Label x:Name="questionTitle"
+           Text=""
+           FontSize="Large"
+           TextColor="{DynamicResource PrimaryTextColor}"
+           HorizontalOptions="Center"
+           MaximumWidthRequest="400"/>
+        <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="questionsCor" 
+                   Text="" 
+                   Grid.Column="0"
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Start"/>
+            <Label x:Name="questionsIncor" 
+                   Text="" 
+                   TextColor="{DynamicResource PrimaryTextColor}" 
+                   Grid.Column="1"
+                   HorizontalOptions="End"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
