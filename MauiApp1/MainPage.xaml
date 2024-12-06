@@ -5,15 +5,7 @@
              Title="Trivia Game"
              BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
-    <!--#region NewRegion
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/DarkTheme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-    endregion-->
+    
 
     <ScrollView>
         
@@ -24,38 +16,84 @@
                 FontSize="20" 
                 TextColor="{DynamicResource PrimaryTextColor}"
                 />
+            <Border>
             <Picker x:Name="difficulty" 
                     Title="Difficulty"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
                     TitleColor="{DynamicResource SecondaryTextColor}"
-                    SelectedItem="Medium"
-                    >
+                    Margin="0, 20, 0, 0"
+                    
+                    Opacity="0.7"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                    HeightRequest="60">
                 <Picker.Items>
                     <x:String>Easy</x:String>
                     <x:String>Medium</x:String>
                     <x:String>Hard</x:String>
                 </Picker.Items>
             </Picker>
-
-            <Picker x:Name="type" 
+            </Border>
+            <Border>
+                <Picker x:Name="type"
                     Title="Multiple Choice / True or False"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
                     TitleColor="{DynamicResource SecondaryTextColor}"
-                    SelectedItem="{Binding SelectedItem}"
-                    >
-                <Picker.Items>
-                    <x:String >Multiple Choice</x:String>
-                    <x:String>True/False</x:String>
-                </Picker.Items>
-            </Picker>
-            <HorizontalStackLayout x:Name="buttonLayout">
-                <Button Text="5 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Button Text="10 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Button Text="15 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Button Text="20 Questions" Clicked="NumberQuestions" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-            </HorizontalStackLayout>
+                    Margin="0, 20, 0, 0"
+                    Opacity="0.7"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                    HeightRequest="60">
+                    <Picker.Items>
+                        <x:String >Multiple Choice</x:String>
+                        <x:String>True/False</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Border>
+            <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="0" 
+                            Grid.Column="0" 
+                            Text="5 Questions" 
+                            Clicked="NumberQuestions" 
+                            Background="{DynamicResource SecondaryBackgroundColor}" 
+                            TextColor="{DynamicResource PrimaryTextColor}"
+                            Margin="2"/>
+                    <Button Grid.Row="0" 
+                            Grid.Column="1" 
+                            Text="10 Questions" 
+                            Clicked="NumberQuestions" 
+                            Background="{DynamicResource SecondaryBackgroundColor}" 
+                            TextColor="{DynamicResource PrimaryTextColor}"
+                            Margin="2"/>
+                    <Button Grid.Row="1" 
+                            Grid.Column="0" 
+                            Text="15 Questions" 
+                            Clicked="NumberQuestions" 
+                            Background="{DynamicResource SecondaryBackgroundColor}" 
+                            TextColor="{DynamicResource PrimaryTextColor}"
+                            Margin="2"/>
+                    <Button Grid.Row="1" 
+                            Grid.Column="1" 
+                            Text="20 Questions" 
+                            Clicked="NumberQuestions" 
+                            Background="{DynamicResource SecondaryBackgroundColor}" 
+                            TextColor="{DynamicResource PrimaryTextColor}"
+                            Margin="2"/>
+
+                  
+            
+                </Grid>
+         
             <Label FontSize="Header" Text="Please enter total amount of questions" x:Name="questionLabel" TextColor="{DynamicResource PrimaryTextColor}"/>
             <Button Text="Play!" Clicked="goButton" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large"/>
         </VerticalStackLayout>

@@ -5,27 +5,66 @@
              Title="Game"
               BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
-    <VerticalStackLayout HorizontalOptions="Center">
-        <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
             <Label Text="{Binding NumberOfQuestions}" 
                    FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}"/>
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Start"
+                   Grid.Column="0"/>
             <Label Text="{Binding Difficulty}"
                    FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}"/>
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Center"
+                   Grid.Column="1"/>
             <Label Text="{Binding GameType}"
                    FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}"/>
-
-        </HorizontalStackLayout>
+                   TextColor="{DynamicResource PrimaryTextColor}" 
+                   HorizontalOptions="End"
+                   Grid.Column="2"/>
+        </Grid>
+   
     <Label x:Name="questionNumber" 
            Text="" 
            FontSize="Medium"
            TextColor="{DynamicResource PrimaryTextColor}"/>
+    <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Orange"/>
     <Label x:Name="questionTitle"
            Text=""
            FontSize="Large"
-           TextColor="{DynamicResource PrimaryTextColor}"/>
-        <StackLayout x:Name="buttonLayout" />
+           TextColor="{DynamicResource PrimaryTextColor}"
+           HorizontalOptions="Center"
+           MaximumWidthRequest="400"/>
+        <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="questionsCor" 
+                   Text="" 
+                   Grid.Column="0"
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Start"/>
+            <Label x:Name="questionsIncor" 
+                   Text="" 
+                   TextColor="{DynamicResource PrimaryTextColor}" 
+                   Grid.Column="1"
+                   HorizontalOptions="End"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -113,9 +113,17 @@ public partial class Game : ContentPage
 
     private async void GameLoop()
     {
-        if(currentQuestion == 0)
+        if (currentQuestion == 0)
             await Task.Delay(1000);
+        else
+        {
+            IsBusy = true;
+            await Task.Delay(500);
+            
+        }
         buttonLayout.Children.Clear();
+        questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+        IsBusy = false;
         questionTitle.Text = questionResponse.results[currentQuestion].question;
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
@@ -133,14 +141,20 @@ public partial class Game : ContentPage
         }
         HorizontalStackLayout view1 = new HorizontalStackLayout();
         HorizontalStackLayout view2 = new HorizontalStackLayout();
+        // Line below gets rid of &nbsp; and all those html formatting things from the json
+
+        questionResponse.results[currentQuestion].correct_answer = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].correct_answer);
         for (int j = 0; j < questionResponse.results[currentQuestion].incorrect_answers.Count; j++)
         {
-                
+            questionResponse.results[currentQuestion].incorrect_answers[j] = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].incorrect_answers[j]);
+            possibleAnswers[j] = System.Web.HttpUtility.HtmlDecode(possibleAnswers[j]);
             Button answer = new Button
             {
                 Text = possibleAnswers[j],
                 TextColor = primaryTextColor,
-                BackgroundColor = secondaryBackgroundColor
+                BackgroundColor = secondaryBackgroundColor,
+                HorizontalOptions = LayoutOptions.Center,
+                FontSize = 30
             };
             answer.Clicked += AnswerClicked;
                 
@@ -169,13 +183,20 @@ public partial class Game : ContentPage
         {
             if (questionResponse.results.Count > currentQuestion +1)
             {
+                IsBusy = true;
+                button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
+                questionsCor.Text = QuestionsCorrect.ToString();
+                questionTitle.Text = "";
                 GameLoop();
             }
             else
             {
+
+                button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
+                questionTitle.Text = "";
                 GameEnd(QuestionsCorrect, QuestionsIncorrect);
              
             }
@@ -184,13 +205,19 @@ public partial class Game : ContentPage
         {
             if (questionResponse.results.Count > currentQuestion +1)
             {
+                IsBusy = true;
+                button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
+                questionsIncor.Text = QuestionsIncorrect.ToString();
+                questionTitle.Text = "";
                 GameLoop();
             }
             else
             {
+                button.BackgroundColor = Colors.Red;
                 QuestionsIncorrect++;
+                questionTitle.Text = "";
                 GameEnd(QuestionsCorrect, QuestionsIncorrect);
 
             }
@@ -221,6 +248,7 @@ public partial class Game : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 string contents = await response.Content.ReadAsStringAsync();
+                
                 // Below line from Json2CSharp 
                 questionResponse = JsonSerializer.Deserialize<QuestionResponse>(contents);
                 
