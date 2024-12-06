@@ -167,7 +167,7 @@ public partial class Game : ContentPage
         // Below is if user selects correct answer to question
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
-            if (questionResponse.results.Count > currentQuestion)
+            if (questionResponse.results.Count > currentQuestion +1)
             {
                 currentQuestion++;
                 QuestionsCorrect++;
@@ -182,7 +182,7 @@ public partial class Game : ContentPage
         }
         else
         {
-            if (questionResponse.results.Count > currentQuestion)
+            if (questionResponse.results.Count > currentQuestion +1)
             {
                 currentQuestion++;
                 QuestionsIncorrect++;

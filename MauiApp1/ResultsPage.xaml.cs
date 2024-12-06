@@ -9,7 +9,7 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int QuestionsCorrect, int QuestionsIncorrect, string difficulty , string numberOfQuestions, string questionType)
     {
         InitializeComponent();
-        questionsCorrect.Text = QuestionsCorrect.ToString();
-        questionsIncorrect.Text = QuestionsIncorrect.ToString();
+        questionsCorrect.Text += QuestionsCorrect.ToString();
+        questionsIncorrect.Text += QuestionsIncorrect.ToString();
     }
 }

@@ -5,8 +5,8 @@
              Title="ResultsPage">
     <VerticalStackLayout>
         <Label x:Name="questionsCorrect"
-             Text="Questions Correct"/>
+             Text="Questions Correct: " FontSize="Large"/>
         <Label x:Name="questionsIncorrect"
-               Text=""/>
+               Text="Questions Incorrect: " FontSize="Large"/>
     </VerticalStackLayout>
 </ContentPage>
