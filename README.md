@@ -30,10 +30,6 @@ Build and run the project on your desired platform (Android, iOS, Windows, macOS
 
 The project utilizes an external API to fetch trivia questions Thanks to Open Trivia DB.
 
-Important:
-
-    To run the application, ensure you have an API key for the chosen trivia API.
-    Configure the API endpoint and any necessary parameters in the appropriate code sections.
 
 # Customization
 
