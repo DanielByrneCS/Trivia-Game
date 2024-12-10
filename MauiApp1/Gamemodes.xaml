@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Gamemodes"
+             Title="Gamemodes">
+    <VerticalStackLayout HorizontalOptions="Center">
+        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemodes" FontSize="Large"/>
+        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemode 1 and 3 are timed. The other 2 have set number of questions" FontSize="Medium"/>
+        <Grid Margin="10" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--
+            first gamemode sp only
+            Second gamemode is mp & sp 
+            third and fourth gamemodes are mp only
+            -->
+            <Button Clicked="gmClick" 
+                    x:Name="gm1" 
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Text="1: Time Attack"
+                    WidthRequest="300"
+                    HeightRequest="200"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Button Clicked="gmClick" 
+                    x:Name="gm2" 
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    Text="2: Hot Seat (Co-Op)" 
+                    WidthRequest="300"
+                    HeightRequest="200"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Button Clicked="gmClick" 
+                    x:Name="gm3" 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Text="3: Hot Potato" 
+                    HeightRequest="200"
+                    WidthRequest="300"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Button Clicked="gmClick" 
+                    x:Name="gm4" 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    Text="4: Versus (set q)"
+                    HeightRequest="200"
+                    WidthRequest="300"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

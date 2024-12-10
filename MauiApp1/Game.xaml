@@ -54,7 +54,7 @@
                 <ColumnDefinition Width="*" />
 
             </Grid.ColumnDefinitions>
-
+               
             <Label x:Name="questionsCor" 
                    Text="" 
                    Grid.Column="0"

@@ -6,6 +6,7 @@ public partial class Settings : ContentPage
 	public Settings()
 	{
 		InitializeComponent();
+        LoadTimerLength();
 	}
 
     private void ThemeButton(object sender, EventArgs e)
@@ -29,5 +30,21 @@ public partial class Settings : ContentPage
             Preferences.Set("isLightTheme", false);
             isLightTheme = false;
         }
+
+
+    }
+
+   
+
+    private void LoadTimerLength()
+    {
+        int savedTimerLength = Preferences.Get("TimerLength", 60);
+        TimerEntry.Text = savedTimerLength.ToString();
+    }
+
+    private void TimerChanged(object sender, TextChangedEventArgs e)
+    {
+        int timerLength = int.Parse(TimerEntry.Text);
+        Preferences.Set("TimerLength", timerLength);
     }
 }

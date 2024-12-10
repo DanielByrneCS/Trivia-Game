@@ -8,6 +8,7 @@ namespace MauiApp1
         int numQuestions = 0;
         bool firstRun = true;
         private int selectedPlayers = 1;
+        bool timed = false;
 
         public MainPage()
         {
@@ -61,7 +62,15 @@ namespace MauiApp1
 
                 selectedButton.IsEnabled = true;
             }
-                
+            Color secondaryBackgroundColor;
+            if (Preferences.Get("isLightTheme", false))
+                secondaryBackgroundColor = Color.FromArgb("FF6347");
+            else
+                secondaryBackgroundColor = Color.FromArgb("FF6347");
+            foreach (Button buttons in buttonGrid.Children)
+            {
+                buttons.BackgroundColor = secondaryBackgroundColor;
+            }
             selectedButton = button;
             if (selectedButton.Text.Equals("5 Questions"))
             {
@@ -99,7 +108,7 @@ namespace MauiApp1
                 }
                 else if(difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null && selectedPlayers != 1)
                 {
-                    await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
+                    //await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
                 }
                 else
                 {
@@ -131,6 +140,11 @@ namespace MauiApp1
                 player3.Source = ImageSource.FromFile("unselectedplayer.png");
                 player4.Source = ImageSource.FromFile("unselectedplayer.png");
                 playersLabel.Text = "1 Player Selected";
+                numQuestions = 0;
+                timerTip.IsVisible = false;
+                timed = false;
+                buttonGrid.IsVisible = false;
+                questionLabel.Text = "Please choose your settings and play!";
             }
             else if (selectedPlayers == 2)
             {
@@ -145,7 +159,7 @@ namespace MauiApp1
                 player1.Source = ImageSource.FromFile("selectedplayer.png");
                 player2.Source = ImageSource.FromFile("selectedplayer.png");
                 player3.Source = ImageSource.FromFile("selectedplayer.png");
-                playersLabel.Text = "3 Player Selected";
+                playersLabel.Text = "3 Players Selected";
             }
             else if (selectedPlayers == 4)
             {
@@ -155,11 +169,32 @@ namespace MauiApp1
                 player3.Source = ImageSource.FromFile("selectedplayer.png");
                 player4.Source = ImageSource.FromFile("selectedplayer.png");
                 selectedPlayers = 0; // variable resets to loop
-                playersLabel.Text = "4 Player Selected";
+                playersLabel.Text = "4 Players Selected";
             }
         }
+        
+        private async void gamemodeButton(object sender, EventArgs e)
+        {
+           Gamemodes gamemodePage = new Gamemodes(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers);
 
-       
+            await Navigation.PushAsync(gamemodePage);
+            
+            gamemodePage.DataSentBack += (sender, data) =>
+            {
+                if (data == 2 || data == 4)
+                {
+                    buttonGrid.IsVisible = true;
+                    timerTip.IsVisible = false;
+                }
+                else
+                {
+                    timed = true;
+                    buttonGrid.IsVisible = false;
+                    timerTip.IsVisible = true;
+                    numQuestions = 0;
+                }
+            };
+        }
     }
 
 }

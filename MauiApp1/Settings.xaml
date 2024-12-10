@@ -7,7 +7,15 @@
              >
     <VerticalStackLayout>
         <Button Background="{DynamicResource TertiaryBackgroundColor}"
-        TextColor="{DynamicResource PrimaryTextColor}"
-        Text="Change Theme" Clicked="ThemeButton"/>
+                TextColor="{DynamicResource PrimaryTextColor}"
+                Text="Change Theme" Clicked="ThemeButton"/>
+        <Label Text="Timer Length" FontSize="Medium" TextColor="{DynamicResource PrimaryTextColor}"/>
+        <Entry Background="{DynamicResource TertiaryBackgroundColor}"
+               TextColor="{DynamicResource PrimaryTextColor}"
+               x:Name="TimerEntry"
+               Keyboard="Numeric"
+               Placeholder="Enter Game Timer"
+               TextChanged="TimerChanged"
+               WidthRequest="60"/>   
     </VerticalStackLayout>
 </ContentPage>

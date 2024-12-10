@@ -11,13 +11,6 @@
         
         <VerticalStackLayout HorizontalOptions="Center">
             <Image Source="triviadark.png" WidthRequest="400" x:Name="logo"/>
-            <Label 
-                Text="Please choose your settings and play!" 
-                FontSize="Medium" 
-                TextColor="{DynamicResource PrimaryTextColor}"
-                HorizontalOptions="Center"
-                FontFamily="Serpentine"
-                />
             <Border Margin="0, 20, 0, 0">
             <Picker x:Name="difficulty" 
                     
@@ -86,7 +79,10 @@
             
             
             <!-- Below is grid for buttons-->
-            <Grid Margin="0">
+            <Button Clicked="gamemodeButton" 
+                    Text="Game Modes" 
+                    Background="{DynamicResource SecondaryBackgroundColor}"/>
+            <Grid Margin="0" IsVisible="False" x:Name="buttonGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -126,9 +122,14 @@
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
             </Grid>
-            
+            <Label x:Name="timerTip" 
+                   Text="Timer Length can be changed in settings" 
+                   FontSize="Medium"
+                   TextColor="{DynamicResource PrimaryTextColor}"
+                   HorizontalOptions="Center"
+                   IsVisible="False"/>
             <Label FontSize="Large" 
-                   Text="Please enter total amount of questions" 
+                   Text="Please choose your settings and play!" 
                    x:Name="questionLabel" 
                    TextColor="{DynamicResource PrimaryTextColor}"
                    HorizontalOptions="Center"
