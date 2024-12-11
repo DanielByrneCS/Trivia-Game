@@ -66,6 +66,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="MPTimedGame.xaml.cs">
+	    <DependentUpon>MPTimedGame.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="TimedGame.xaml.cs">
+	    <DependentUpon>TimeGame.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Resources\Styles\LightTheme.xaml.cs">
 	    <DependentUpon>LightTheme.xaml</DependentUpon>
 	  </Compile>
@@ -78,6 +84,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="MPTimedGame.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TimedGame.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Game.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

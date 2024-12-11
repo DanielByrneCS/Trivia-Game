@@ -1,2 +1,0 @@
-﻿Things for dan to do.
-1. implement timed games (Time Attack and Hot Potato)

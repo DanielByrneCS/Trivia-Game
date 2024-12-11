@@ -9,7 +9,7 @@ namespace MauiApp1
         bool firstRun = true;
         private int selectedPlayers = 1;
         bool timed = false;
-
+        private List<string> playerNames;
         public MainPage()
         {
            InitializeComponent();
@@ -102,18 +102,35 @@ namespace MauiApp1
             try
             {
                 // 1 player game
-                if (difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null && selectedPlayers == 1)
+                if (difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers == 1 || timed)
                 {
-                    await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
+                    // SP timed game
+                    if(timed)
+                        await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex));
+                    else if(numQuestions != 0)
+                        // SP set Questions
+                        await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
+                    else
+                        DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
                 }
-                else if(difficulty.SelectedItem.ToString() != null && numQuestions != 0 && type.SelectedItem.ToString() != null && selectedPlayers != 1)
+                else if(difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers != 1)
                 {
-                    //await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
+                    for(int i = 0; i < selectedPlayers; i++)
+                    {
+                        string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
+                        playerNames[i] = playerName;
+                    }
+                    // Multiplayer timed game
+                    if (timed)
+                        await Navigation.PushAsync(new MPTimedGame(difficulty.SelectedIndex, type.SelectedIndex, selectedPlayers, playerNames));
+                    else if (numQuestions != 0)
+                        // Multiplayer Set questions game
+                        await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
+                    else
+                        DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
+                    
                 }
-                else
-                {
-                    DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
-                }
+                
             }
             catch (Exception)
             {
