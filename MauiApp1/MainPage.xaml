@@ -10,7 +10,8 @@
     <ScrollView>
         
         <VerticalStackLayout HorizontalOptions="Center">
-            <Image Source="triviadark.png" WidthRequest="400" x:Name="logo"/>
+            <Image Source="trivialight.png" WidthRequest="300" x:Name="logo"/>
+            
             <Border Margin="0, 20, 0, 0">
             <Picker x:Name="difficulty" 
                     
@@ -30,6 +31,7 @@
                 </Picker.Items>
             </Picker>
             </Border>
+            <Label x:Name="numPlayertext" Text="" FontSize="Large" HorizontalOptions="Center"/>
             <Border Margin="0, 20, 0, 20">
                 <Picker x:Name="type"
                     
@@ -81,7 +83,8 @@
             <!-- Below is grid for buttons-->
             <Button Clicked="gamemodeButton" 
                     Text="Game Modes" 
-                    Background="{DynamicResource SecondaryBackgroundColor}"/>
+                    Background="{StaticResource SecondaryBackgroundColor}"
+                    TextColor="{DynamicResource PrimaryTextColor}"/>
             <Grid Margin="0" IsVisible="False" x:Name="buttonGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -97,28 +100,28 @@
                         Grid.Column="0" 
                         Text="5 Questions" 
                         Clicked="NumberQuestions" 
-                        Background="{DynamicResource SecondaryBackgroundColor}" 
+                        Background="{StaticResource SecondaryBackgroundColor}" 
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
                 <Button Grid.Row="0" 
                         Grid.Column="1" 
                         Text="10 Questions" 
                         Clicked="NumberQuestions" 
-                        Background="{DynamicResource SecondaryBackgroundColor}" 
+                        Background="{StaticResource SecondaryBackgroundColor}" 
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
                 <Button Grid.Row="1" 
                         Grid.Column="0" 
                         Text="15 Questions" 
                         Clicked="NumberQuestions" 
-                        Background="{DynamicResource SecondaryBackgroundColor}" 
+                        Background="{StaticResource SecondaryBackgroundColor}" 
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
                 <Button Grid.Row="1" 
                         Grid.Column="1" 
                         Text="20 Questions" 
                         Clicked="NumberQuestions" 
-                        Background="{DynamicResource SecondaryBackgroundColor}" 
+                        Background="{StaticResource SecondaryBackgroundColor}" 
                         TextColor="{DynamicResource PrimaryTextColor}"
                         Margin="2"/>
             </Grid>
@@ -134,7 +137,7 @@
                    TextColor="{DynamicResource PrimaryTextColor}"
                    HorizontalOptions="Center"
                    FontFamily="Serpentine"/>
-            <Button Text="Play!" Clicked="goButton" Background="{DynamicResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large" />
+            <Button Text="Play!" Clicked="goButton" Background="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large" />
         </VerticalStackLayout>
     </ScrollView>
 

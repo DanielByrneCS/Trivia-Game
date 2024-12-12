@@ -5,24 +5,29 @@ namespace MauiApp1
     public partial class MainPage : ContentPage
     {
         private Button selectedButton;
-        int numQuestions = 0;
+        int numQuestions = 0, checkNames = 0;
         bool firstRun = true;
         private int selectedPlayers = 1;
-        bool timed = false;
-        private List<string> playerNames;
+        bool timed = false, maxPlayers = false;
+        private List<string> playerNames = ["","","",""];
+        
+        
         public MainPage()
         {
            InitializeComponent();
-            if (Preferences.Get("isLightTheme", false))
-                logo.Source = ImageSource.FromFile("trivialight.png");
-            else
-                logo.Source = ImageSource.FromFile("triviadark.png");
+
+            
             BindingContext = this;
+            numPlayertext.Text = selectedPlayers.ToString();
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (Preferences.Get("isLightTheme", false))
+                logo.Source = ImageSource.FromFile("triviadark.png");
+            else
+                logo.Source = ImageSource.FromFile("trivialight.png");
             difficulty.SelectedIndex = 1;
             type.SelectedIndex = 1;
             if (firstRun)
@@ -39,7 +44,7 @@ namespace MauiApp1
             {
                 Application.Current.Resources.MergedDictionaries.Clear();
                 Application.Current.Resources.MergedDictionaries.Add(new LightTheme());
-                logo.Source = ImageSource.FromFile("trivialight.png");
+                logo.Source = ImageSource.FromFile("triviadark.png");
                 isLightTheme = true;
 
             }
@@ -48,7 +53,7 @@ namespace MauiApp1
 
                 Application.Current.Resources.MergedDictionaries.Clear();
                 Application.Current.Resources.MergedDictionaries.Add(new DarkTheme());
-                logo.Source = ImageSource.FromFile("triviadark.png");
+                logo.Source = ImageSource.FromFile("trivialight.png");
                 isLightTheme = false;
             }
         }
@@ -102,7 +107,7 @@ namespace MauiApp1
             try
             {
                 // 1 player game
-                if (difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers == 1 || timed)
+                if (difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers == 1)
                 {
                     // SP timed game
                     if(timed)
@@ -111,15 +116,30 @@ namespace MauiApp1
                         // SP set Questions
                         await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
                     else
-                        DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
+                        DisplayAlert("Invalid Input", "Please enter all settings correctly.", "Return to Selection");
                 }
                 else if(difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers != 1)
                 {
-                    for(int i = 0; i < selectedPlayers; i++)
+                    if(checkNames != 4)
                     {
-                        string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
-                        playerNames[i] = playerName;
+                        for (int i = checkNames; i < selectedPlayers; i++)
+                        {
+                            string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
+                            playerNames[i] = playerName;
+                            checkNames++;
+                        }
                     }
+                    else
+                    {
+                        checkNames = 0;
+                        for (int i = 0; i < selectedPlayers; i++)
+                        {
+                            string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
+                            playerNames[i] = playerName;
+                            checkNames++;
+                        }
+                    }
+                    
                     // Multiplayer timed game
                     if (timed)
                         await Navigation.PushAsync(new MPTimedGame(difficulty.SelectedIndex, type.SelectedIndex, selectedPlayers, playerNames));
@@ -147,8 +167,11 @@ namespace MauiApp1
         {
             // This tap gesture on the pictures allows user to select players
             // Spices it up as opposed to a lot of drop down menus
-            selectedPlayers++;
-
+            if (selectedPlayers != 4)
+                selectedPlayers++;
+            else
+                selectedPlayers = 1;
+            numPlayertext.Text = selectedPlayers.ToString();
             if (selectedPlayers == 1)
             {
                 
@@ -160,12 +183,15 @@ namespace MauiApp1
                 numQuestions = 0;
                 timerTip.IsVisible = false;
                 timed = false;
+                selectedPlayers = 1;
+                maxPlayers = false;
+                
                 buttonGrid.IsVisible = false;
                 questionLabel.Text = "Please choose your settings and play!";
             }
             else if (selectedPlayers == 2)
             {
-               
+                
                 player1.Source = ImageSource.FromFile("selectedplayer.png");
                 player2.Source = ImageSource.FromFile("selectedplayer.png");
                 playersLabel.Text = "2 Players Selected";
@@ -185,8 +211,14 @@ namespace MauiApp1
                 player2.Source = ImageSource.FromFile("selectedplayer.png");
                 player3.Source = ImageSource.FromFile("selectedplayer.png");
                 player4.Source = ImageSource.FromFile("selectedplayer.png");
-                selectedPlayers = 0; // variable resets to loop
+                maxPlayers = true;
                 playersLabel.Text = "4 Players Selected";
+                
+                
+            }
+            else
+            {
+                
             }
         }
         

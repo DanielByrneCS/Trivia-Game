@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Gamemodes"
-             Title="Gamemodes">
+             Title="Gamemodes"
+             BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
     <VerticalStackLayout HorizontalOptions="Center">
-        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemodes" FontSize="Large"/>
-        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemode 1 and 3 are timed. The other 2 have set number of questions" FontSize="Medium"/>
+        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemodes" FontSize="Large" HorizontalOptions="Center"/>
+        <Label TextColor="{DynamicResource PrimaryTextColor}" Text="Gamemode 1 and 3 are timed. The other 2 have set number of questions" FontSize="Medium" HorizontalOptions="Center"/>
+        <Line/>
         <Grid Margin="10" Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -25,17 +27,23 @@
                     Grid.Row="0" 
                     Grid.Column="0" 
                     Text="1: Time Attack"
-                    WidthRequest="300"
-                    HeightRequest="200"
+                    WidthRequest="180"
+                    HeightRequest="180"
+                    CornerRadius="60"
+                    Margin="0,0,0,10"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Label x:Name="gm1L" TextColor="{DynamicResource PrimaryTextColor}" Grid.Row="0" Grid.Column="0" FontFamily="ApeMount" Text="Singleplayer Only" IsVisible="False" VerticalOptions="Center" HorizontalOptions="Center" Padding="0,40,0,0"/>
             <Button Clicked="gmClick" 
                     x:Name="gm2" 
                     Grid.Row="0" 
                     Grid.Column="1" 
-                    Text="2: Hot Seat (Co-Op)" 
-                    WidthRequest="300"
-                    HeightRequest="200"
+                    Text="2: Hot Seat (Co-Op)"
+                    WidthRequest="180"
+                    HeightRequest="180"
+                    CornerRadius="60"
+                    Margin="0,0,0,10"
+                    FontSize="17"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
             <Button Clicked="gmClick" 
@@ -43,19 +51,26 @@
                     Grid.Row="1" 
                     Grid.Column="0" 
                     Text="3: Hot Potato" 
-                    HeightRequest="200"
-                    WidthRequest="300"
+                    WidthRequest="180"
+                    HeightRequest="180"
+                    CornerRadius="60"
+                    Margin="0,0,0,10"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Label x:Name="gm3L" TextColor="{DynamicResource PrimaryTextColor}" Grid.Row="1" Grid.Column="0" FontFamily="ApeMount" Text="Multiplayer Only" IsVisible="False" VerticalOptions="Center" HorizontalOptions="Center" Padding="0,40,0,0"/>
+
             <Button Clicked="gmClick" 
                     x:Name="gm4" 
                     Grid.Row="1" 
                     Grid.Column="1" 
                     Text="4: Versus (set q)"
-                    HeightRequest="200"
-                    WidthRequest="300"
+                    WidthRequest="180"
+                    HeightRequest="180"
+                    CornerRadius="60"
+                    Margin="0,0,0,10"
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource SecondaryBackgroundColor}"/>
+            <Label x:Name="gm4L" TextColor="{DynamicResource PrimaryTextColor}" Grid.Row="1" Grid.Column="1" FontFamily="ApeMount" Text="Multiplayer Only" IsVisible="False" VerticalOptions="Center" HorizontalOptions="Center" Padding="0,40,0,0"/>
             
         </Grid>
     </VerticalStackLayout>

@@ -5,7 +5,7 @@
 
 
     <!--Below is Light theme-->
-
+    
     <Color x:Key="PrimaryBackgroundColor">#D5D5D5</Color>
     <Color x:Key="SecondaryBackgroundColor">#ACACAC</Color>
     <Color x:Key="TertiaryBackgroundColor">#2f55ff</Color>
@@ -22,8 +22,7 @@
     <Style TargetType ="Button">
         <Setter Property ="FontFamily" Value ="ApeMount"/>
         <Setter Property="FontSize" Value="20"/>
-        <Setter Property="BackgroundColor" Value="AliceBlue"/>
-        <Setter Property="TextColor" Value="Navy"/>
+        <Setter Property="CornerRadius" Value="13"/>
     </Style>
 
 

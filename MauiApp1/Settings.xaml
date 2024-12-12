@@ -6,16 +6,53 @@
              BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
     <VerticalStackLayout>
-        <Button Background="{DynamicResource TertiaryBackgroundColor}"
-                TextColor="{DynamicResource PrimaryTextColor}"
-                Text="Change Theme" Clicked="ThemeButton"/>
-        <Label Text="Timer Length" FontSize="Medium" TextColor="{DynamicResource PrimaryTextColor}"/>
-        <Entry Background="{DynamicResource TertiaryBackgroundColor}"
-               TextColor="{DynamicResource PrimaryTextColor}"
-               x:Name="TimerEntry"
-               Keyboard="Numeric"
-               Placeholder="Enter Game Timer"
-               TextChanged="TimerChanged"
-               WidthRequest="60"/>   
+        <Border>
+            <Button Background="{StaticResource SecondaryBackgroundColor}"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    Text="Change Theme" Clicked="ThemeButton"
+                    WidthRequest="230"
+                    HeightRequest="130"
+                    Margin="00, 40, 0, 20"
+                    Padding="0,0,0,0"
+                    CornerRadius="60"
+                    BorderColor="{StaticResource SecondaryBackgroundColor}"/>
+        </Border>
+        <Label Text="Timer Length" FontSize="Medium" TextColor="{DynamicResource PrimaryTextColor}" HorizontalOptions="Center"/>
+        <Label Text="{Binding TimerLength}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large" HorizontalOptions="Center"/>
+        <Grid HorizontalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="140" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" 
+                    Text="30 Seconds" 
+                    Clicked="TimerButton" 
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{StaticResource SecondaryBackgroundColor}"
+                    />
+            <Button Grid.Row="0" Grid.Column="1" 
+                    Text="60 Seconds" 
+                    Clicked="TimerButton" 
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
+            <Button Grid.Row="1" Grid.Column="0" 
+                    Text="90 Seconds"
+                    Style="{DynamicResource RoundButton}"
+                    Clicked="TimerButton" 
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
+            
+            <Button Grid.Row="1" Grid.Column="1" 
+                    Text="120 Seconds"
+                    Clicked="TimerButton" 
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
+            
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -7,16 +7,13 @@
     Shell.FlyoutBehavior="Disabled"
     Title="MauiApp1">
     <TabBar>
-        <Tab Title="Home"
-            Icon="{StaticResource Cog}">
+        <Tab Title="Home">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        <Tab Title="Previous Games"
-            Icon="{StaticResource Cog}">
+        <Tab Title="Previous Games">
             <ShellContent ContentTemplate="{DataTemplate local:Results}" />
         </Tab>
-        <Tab Title="Settings"
-             Icon="{StaticResource Cog}">
+        <Tab Title="Settings">
             <ShellContent ContentTemplate="{DataTemplate local:Settings}"/>
         </Tab>
     </TabBar>

@@ -21,9 +21,8 @@
         <Style TargetType ="Button">
             <Setter Property ="FontFamily" Value ="ApeMount"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="BackgroundColor" Value="AliceBlue"/>
-            <Setter Property="TextColor" Value="Navy"/>
-        </Style>
+            <Setter Property="CornerRadius" Value="13"/>
+    </Style>
 
 
 

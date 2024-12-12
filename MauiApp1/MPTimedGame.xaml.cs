@@ -24,6 +24,7 @@ public partial class MPTimedGame : ContentPage
     string boolOrMCQ;
     Color primaryTextColor;
     Color secondaryBackgroundColor;
+    bool ranOut = false;
 
     int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
 
@@ -54,7 +55,7 @@ public partial class MPTimedGame : ContentPage
     private int numQuestions;
     private int questionType;
     
-    // I felt another class for multiplayer, although repeating code, was better
+    // I felt another class for multiplayer/timed, although repeating code, was better
     // Game.xaml.cs is big enough to navigate so this will avoid headaches, would be very easy to combine them if need
     public MPTimedGame(int difficulty, int questionType, int numOfPlayers, List<string> names)
     {
@@ -87,7 +88,7 @@ public partial class MPTimedGame : ContentPage
         {
             --Count;
             if (Count == 0)
-                timer.Stop();
+                GameEnd();
 
 
         };
@@ -156,7 +157,7 @@ public partial class MPTimedGame : ContentPage
 
     private async void GameLoop(int currPlayer)
     {
-        currentPlayerLabel.Text = "Current Player: " + names[currentPlayer + 1];
+        currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
         if (currentQuestion == 0)
             await Task.Delay(1000);
         else
@@ -232,7 +233,7 @@ public partial class MPTimedGame : ContentPage
                 button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
-                if(currentPlayer >= numOfPlayers)
+                if(currentPlayer >= numOfPlayers -1)
                     currentPlayer = 0;
                 else
                     currentPlayer++;
@@ -246,7 +247,7 @@ public partial class MPTimedGame : ContentPage
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                if(currentPlayer == numOfPlayers - 1)
+                if(currentPlayer >= numOfPlayers -1)
                     GameEnd(QuestionsCorrect, QuestionsIncorrect);
                 else
                 {
@@ -275,8 +276,12 @@ public partial class MPTimedGame : ContentPage
                 button.BackgroundColor = Colors.Red;
                 QuestionsIncorrect++;
                 questionTitle.Text = "";
-                if (currentPlayer == numOfPlayers - 1)
+                if (currentPlayer == numOfPlayers)
+                {
+                    ranOut = true;
                     GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                }
+                    
                 else
                 {
                     await GetQuestions();
@@ -293,7 +298,14 @@ public partial class MPTimedGame : ContentPage
 
     private async void GameEnd(int questionsCorrect, int questionsIncorrect)
     {
-        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, numOfPlayers));
+        // Occurs when 50 questions are answered as opposed to time running out, person who answered last question will be hot potato
+        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names, ranOut));
+    }
+    private async void GameEnd()
+    {
+        // int timerLength, string hotPotato, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType, List<string> playerList)
+        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names));
+        
     }
 
     string APILinkCreator(int difficulty, int questionType)
