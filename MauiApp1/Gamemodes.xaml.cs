@@ -34,10 +34,6 @@ public partial class Gamemodes : ContentPage
             gm2.Text = "2: Set Questions";
 		}
 
-	}
-
-    public Gamemodes()
-    {
     }
 
     private async void gmClick(object sender, EventArgs e)

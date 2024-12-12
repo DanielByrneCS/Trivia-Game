@@ -4,10 +4,20 @@
              x:Class="MauiApp1.Results"
              Title="Results">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        
+        <StackLayout>
+            <Button x:Name="SingleplayerButton" Text="Singleplayer" Clicked="SingleplayerButtonClicked" WidthRequest="300"/>
+            <Button x:Name="MultiplayerButton" Text="Multiplayer" Clicked="MultiplayerButtonClicked" WidthRequest="300" Margin="10,10,10,30"/>
+
+            <StackLayout x:Name="SingleplayerModes" IsVisible="False">
+                <Button Text="Mode 1" />
+                <Button Text="Mode 2" />
+            </StackLayout>
+
+            <StackLayout x:Name="MultiplayerModes" IsVisible="False">
+                <Button Text="Co-op" />
+                <Button Text="Competitive" />
+            </StackLayout>
+        </StackLayout>
+
     </VerticalStackLayout>
 </ContentPage>

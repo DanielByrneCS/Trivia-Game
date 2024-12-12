@@ -5,11 +5,11 @@ namespace MauiApp1
     public partial class MainPage : ContentPage
     {
         private Button selectedButton;
-        int numQuestions = 0, checkNames = 0;
         bool firstRun = true;
-        private int selectedPlayers = 1;
+        private int selectedPlayers = 1 , gameMode, numQuestions = 0, checkNames = 0;
         bool timed = false, maxPlayers = false;
         private List<string> playerNames = ["","","",""];
+        
         
         
         public MainPage()
@@ -18,7 +18,7 @@ namespace MauiApp1
 
             
             BindingContext = this;
-            numPlayertext.Text = selectedPlayers.ToString();
+            
         }
 
         protected override void OnAppearing()
@@ -106,55 +106,43 @@ namespace MauiApp1
         {
             try
             {
+                
                 // 1 player game
                 if (difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers == 1)
                 {
                     // SP timed game
-                    if(timed)
-                        await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex));
+                    if (timed)
+                    {
+                        string playerName = await DisplayPromptAsync("Player ", "Enter player name:");
+                        await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex, playerName));
+
+                    }
                     else if(numQuestions != 0)
                         // SP set Questions
                         await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
                     else
-                        DisplayAlert("Invalid Input", "Please enter all settings correctly.", "Return to Selection");
+                        await DisplayAlert("Invalid Input", "Please enter all settings correctly.", "Return to Selection");
                 }
                 else if(difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers != 1)
                 {
-                    if(checkNames != 4)
-                    {
-                        for (int i = checkNames; i < selectedPlayers; i++)
-                        {
-                            string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
-                            playerNames[i] = playerName;
-                            checkNames++;
-                        }
-                    }
-                    else
-                    {
-                        checkNames = 0;
-                        for (int i = 0; i < selectedPlayers; i++)
-                        {
-                            string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
-                            playerNames[i] = playerName;
-                            checkNames++;
-                        }
-                    }
-                    
+                    await GetNames();
+                    if(!timed && gameMode == 2)
+                        await Navigation.PushAsync(new CoopGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers, playerNames));
                     // Multiplayer timed game
-                    if (timed)
+                    else if (timed)
                         await Navigation.PushAsync(new MPTimedGame(difficulty.SelectedIndex, type.SelectedIndex, selectedPlayers, playerNames));
                     else if (numQuestions != 0)
                         // Multiplayer Set questions game
                         await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
                     else
-                        DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
+                        await DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
                     
                 }
                 
             }
             catch (Exception)
             {
-                DisplayAlert("Invalid Input", "Please enter details correctly.", "Return to menu");
+                await DisplayAlert("Invalid Input", "Please enter details correctly.", "Return to menu");
                 throw;
             }
          
@@ -171,7 +159,6 @@ namespace MauiApp1
                 selectedPlayers++;
             else
                 selectedPlayers = 1;
-            numPlayertext.Text = selectedPlayers.ToString();
             if (selectedPlayers == 1)
             {
                 
@@ -222,6 +209,29 @@ namespace MauiApp1
             }
         }
         
+        private async Task GetNames()
+        {
+            if (checkNames != 4)
+            {
+                for (int i = checkNames; i < selectedPlayers; i++)
+                {
+                    string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
+                    playerNames[i] = playerName;
+                    checkNames++;
+                }
+            }
+            else
+            {
+                checkNames = 0;
+                for (int i = 0; i < selectedPlayers; i++)
+                {
+                    string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
+                    playerNames[i] = playerName;
+                    checkNames++;
+                }
+            }
+        }
+
         private async void gamemodeButton(object sender, EventArgs e)
         {
            Gamemodes gamemodePage = new Gamemodes(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers);
@@ -234,6 +244,7 @@ namespace MauiApp1
                 {
                     buttonGrid.IsVisible = true;
                     timerTip.IsVisible = false;
+                    gameMode = data;
                 }
                 else
                 {
@@ -241,6 +252,7 @@ namespace MauiApp1
                     buttonGrid.IsVisible = false;
                     timerTip.IsVisible = true;
                     numQuestions = 0;
+                    gameMode = data;
                 }
             };
         }

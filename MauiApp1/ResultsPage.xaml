@@ -4,9 +4,9 @@
              x:Class="MauiApp1.ResultsPage"
              Title="ResultsPage">
     <VerticalStackLayout>
-        <Label x:Name="questionsCorrect"
+        <Label x:Name="questionsCorrectLabel"
              Text="Questions Correct: " FontSize="Large"/>
-        <Label x:Name="questionsIncorrect"
+        <Label x:Name="questionsIncorrectLabel"
                Text="Questions Incorrect: " FontSize="Large"/>
     </VerticalStackLayout>
 </ContentPage>

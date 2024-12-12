@@ -74,6 +74,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="CoopGame.xaml.cs">
+	    <DependentUpon>CoopGame.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="MPTimedGame.xaml.cs">
 	    <DependentUpon>MPTimedGame.xaml</DependentUpon>
 	  </Compile>
@@ -92,6 +95,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CoopGame.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MPTimedGame.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

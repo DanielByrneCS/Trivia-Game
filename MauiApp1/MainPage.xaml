@@ -11,9 +11,9 @@
         
         <VerticalStackLayout HorizontalOptions="Center">
             <Image Source="trivialight.png" WidthRequest="300" x:Name="logo"/>
-            
+
             <Border Margin="0, 20, 0, 0">
-            <Picker x:Name="difficulty" 
+                <Picker x:Name="difficulty" 
                     
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{DynamicResource TertiaryBackgroundColor}"
@@ -24,14 +24,13 @@
                     VerticalOptions="Center"
                     WidthRequest="298"
                     HeightRequest="35">
-                <Picker.Items>
-                    <x:String>Easy</x:String>
-                    <x:String>Medium</x:String>
-                    <x:String>Hard</x:String>
-                </Picker.Items>
-            </Picker>
+                    <Picker.Items>
+                        <x:String>Easy</x:String>
+                        <x:String>Medium</x:String>
+                        <x:String>Hard</x:String>
+                    </Picker.Items>
+                </Picker>
             </Border>
-            <Label x:Name="numPlayertext" Text="" FontSize="Large" HorizontalOptions="Center"/>
             <Border Margin="0, 20, 0, 20">
                 <Picker x:Name="type"
                     
