@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Xml.Linq;
 
 namespace MauiApp1
 {
@@ -118,8 +119,12 @@ namespace MauiApp1
 
                     }
                     else if(numQuestions != 0)
+                    {
+                        string playerName = await DisplayPromptAsync("Player ", "Enter player name:");
                         // SP set Questions
-                        await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex));
+                        await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, playerName));
+                    }
+                        
                     else
                         await DisplayAlert("Invalid Input", "Please enter all settings correctly.", "Return to Selection");
                 }
@@ -133,7 +138,7 @@ namespace MauiApp1
                         await Navigation.PushAsync(new MPTimedGame(difficulty.SelectedIndex, type.SelectedIndex, selectedPlayers, playerNames));
                     else if (numQuestions != 0)
                         // Multiplayer Set questions game
-                        await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers));
+                        await Navigation.PushAsync(new MPGame(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, selectedPlayers, playerNames));
                     else
                         await DisplayAlert("Invalid Input", "Please enter number of questions", "Return to Selection");
                     

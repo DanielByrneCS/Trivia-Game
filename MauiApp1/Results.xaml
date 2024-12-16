@@ -2,22 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Results"
-             Title="Results">
+             Title="Results"
+             Background="{DynamicResource PrimaryBackgroundColor}">
     <VerticalStackLayout>
         <StackLayout>
             <Button x:Name="SingleplayerButton" Text="Singleplayer" Clicked="SingleplayerButtonClicked" WidthRequest="300"/>
             <Button x:Name="MultiplayerButton" Text="Multiplayer" Clicked="MultiplayerButtonClicked" WidthRequest="300" Margin="10,10,10,30"/>
 
             <StackLayout x:Name="SingleplayerModes" IsVisible="False">
-                <Button Text="Mode 1" />
-                <Button Text="Mode 2" />
+                <Button Text="Time Attack" />
+                <Button Text="Set Questions" Clicked="setQuestionsButton" />
             </StackLayout>
 
             <StackLayout x:Name="MultiplayerModes" IsVisible="False">
                 <Button Text="Co-op" />
-                <Button Text="Competitive" />
+                <Button Text="Hot Potato" />
             </StackLayout>
         </StackLayout>
+        
+        
+        
+        <!-- Below is Various Labels for The different Gamemodes-->
+        <Label Text="" 
+               x:Name="spName"
+               TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        <Label Text="" 
+       x:Name="mpNames"
+       TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        <Label Text="" 
+               x:Name="correctLabel" 
+               TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        <Label Text="" 
+               x:Name="incorrectLabel" 
+               TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        <Label Text="" 
+               x:Name="timerLabel" 
+               TextColor="{DynamicResource PrimaryTextColor}"/>
+
+        
+        
 
     </VerticalStackLayout>
 </ContentPage>

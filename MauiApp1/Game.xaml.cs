@@ -27,7 +27,7 @@ public partial class Game : ContentPage
 
     private HttpClient httpClient;
     QuestionResponse questionResponse;
-    string boolOrMCQ;
+    string boolOrMCQ, name;
     Color primaryTextColor;
     Color secondaryBackgroundColor;
     
@@ -40,9 +40,10 @@ public partial class Game : ContentPage
 
 
 
-    public Game(int difficulty, int numQuestions, int type)
+    public Game(int difficulty, int numQuestions, int type, string name)
     {
         InitializeComponent();
+        this.name = name;
         httpClient = new HttpClient();
         GetQuestions(difficulty, numQuestions, type );
         GameLoop();
@@ -200,7 +201,7 @@ public partial class Game : ContentPage
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                GameEnd();
              
             }
         }
@@ -221,15 +222,15 @@ public partial class Game : ContentPage
                 button.BackgroundColor = Colors.Red;
                 QuestionsIncorrect++;
                 questionTitle.Text = "";
-                GameEnd(QuestionsCorrect, QuestionsIncorrect);
+                GameEnd();
 
             }
         }
     }
 
-    private async void GameEnd(int questionsCorrect, int questionsIncorrect)
+    private async void GameEnd()
     {
-        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType));
+        await Navigation.PushAsync(new ResultsPage(QuestionsCorrect, QuestionsIncorrect, Difficulty, NumberOfQuestions, GameType, name));
     }
 
     string APILinkCreator(int difficulty, int numQuestions, int questionType)

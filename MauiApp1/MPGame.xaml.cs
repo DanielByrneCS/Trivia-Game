@@ -27,7 +27,7 @@ public partial class MPGame : ContentPage
 
     int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
 
-
+    List<string> names;
     public string Difficulty { get; set; }
     public string NumberOfQuestions { get; set; }
     public string GameType { get; set; }
@@ -40,15 +40,15 @@ public partial class MPGame : ContentPage
     
     // I felt another class for multiplayer, although repeating code, was better
     // Game.xaml.cs is big enough to navigate so this will avoid headaches, would be very easy to combine them if need
-    public MPGame(int difficulty, int numQuestions, int questionType, int numOfPlayers)
+    public MPGame(int difficulty, int numQuestions, int questionType, int numOfPlayers, List<string> names)
     {
         this.numOfPlayers = numOfPlayers;
+        this.names = names;
         this.difficulty = difficulty;
         this.numQuestions = numQuestions;
         this.questionType = questionType;
         InitializeComponent();
         httpClient = new HttpClient();
-        GetQuestions();
         GameLoop(currentPlayer);
         QuestionsLabel(numQuestions);
         DifficultyLabel(difficulty);
@@ -130,6 +130,7 @@ public partial class MPGame : ContentPage
 
         }
         buttonLayout.Children.Clear();
+        await GetQuestions();
         questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
         IsBusy = false;
         questionTitle.Text = questionResponse.results[currentQuestion].question;
@@ -253,7 +254,8 @@ public partial class MPGame : ContentPage
 
     private async void GameEnd(int questionsCorrect, int questionsIncorrect)
     {
-        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, numOfPlayers));
+        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, names));
+        
     }
 
     string APILinkCreator(int difficulty, int numQuestions, int questionType)
