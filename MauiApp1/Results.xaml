@@ -6,12 +6,12 @@
              Background="{DynamicResource PrimaryBackgroundColor}">
     <VerticalStackLayout>
         <StackLayout>
-            <Button x:Name="SingleplayerButton" Text="Singleplayer" Clicked="SingleplayerButtonClicked" WidthRequest="300"/>
-            <Button x:Name="MultiplayerButton" Text="Multiplayer" Clicked="MultiplayerButtonClicked" WidthRequest="300" Margin="10,10,10,30"/>
+            <Button x:Name="SingleplayerButton" Text="Singleplayer" Clicked="SingleplayerButtonClicked" WidthRequest="300" BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
+            <Button x:Name="MultiplayerButton" Text="Multiplayer" Clicked="MultiplayerButtonClicked" WidthRequest="300" Margin="10,10,10,30" BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
 
             <StackLayout x:Name="SingleplayerModes" IsVisible="False">
-                <Button Text="Time Attack" />
-                <Button Text="Set Questions" Clicked="setQuestionsButton" />
+                <Button Text="Time Attack" Clicked="TimedSP"/>
+                <Button Text="Set Questions" Clicked="SetQuestionsButton" />
             </StackLayout>
 
             <StackLayout x:Name="MultiplayerModes" IsVisible="False">
@@ -23,6 +23,7 @@
         
         
         <!-- Below is Various Labels for The different Gamemodes-->
+        <StackLayout x:Name="gameLayout"></StackLayout>
         <Label Text="" 
                x:Name="spName"
                TextColor="{DynamicResource PrimaryTextColor}"/>

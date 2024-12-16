@@ -8,17 +8,17 @@ namespace MauiApp1
 {
     public class Question
     {
-        public string category { get; set; }
-        public string type { get; set; }
-        public string difficulty { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; }
+        public string Difficulty { get; set; }
         public string question { get; set; }
-        public string correct_answer { get; set; }
-        public List<string> incorrect_answers { get; set; }
+        public string Correct_answer { get; set; }
+        public List<string> Incorrect_answers { get; set; }
     }
 
     public class QuestionResponse
     {
-        public List<Question> results { get; set; }
+        public List<Question> Results { get; set; }
     }
 
 

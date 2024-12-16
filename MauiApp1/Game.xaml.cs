@@ -126,11 +126,11 @@ public partial class Game : ContentPage
             
         }
         buttonLayout.Children.Clear();
-        questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+        questionResponse.Results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.Results[currentQuestion].question);
         IsBusy = false;
-        questionTitle.Text = questionResponse.results[currentQuestion].question;
-        List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
-        possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
+        questionTitle.Text = questionResponse.Results[currentQuestion].question;
+        List<string> possibleAnswers = questionResponse.Results[currentQuestion].Incorrect_answers;
+        possibleAnswers.Add(questionResponse.Results[currentQuestion].Correct_answer);
         possibleAnswers.Sort();
         if(Preferences.Get("isLightTheme", false))
         {
@@ -147,10 +147,10 @@ public partial class Game : ContentPage
         HorizontalStackLayout view2 = new HorizontalStackLayout();
         // Line below gets rid of &nbsp; and all those html formatting things from the json
 
-        questionResponse.results[currentQuestion].correct_answer = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].correct_answer);
-        for (int j = 0; j < questionResponse.results[currentQuestion].incorrect_answers.Count; j++)
+        questionResponse.Results[currentQuestion].Correct_answer = System.Web.HttpUtility.HtmlDecode(questionResponse.Results[currentQuestion].Correct_answer);
+        for (int j = 0; j < questionResponse.Results[currentQuestion].Incorrect_answers.Count; j++)
         {
-            questionResponse.results[currentQuestion].incorrect_answers[j] = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].incorrect_answers[j]);
+            questionResponse.Results[currentQuestion].Incorrect_answers[j] = System.Web.HttpUtility.HtmlDecode(questionResponse.Results[currentQuestion].Incorrect_answers[j]);
             possibleAnswers[j] = System.Web.HttpUtility.HtmlDecode(possibleAnswers[j]);
             Button answer = new Button
             {
@@ -183,9 +183,9 @@ public partial class Game : ContentPage
         StackLayout buttonLayout = (StackLayout)button.Parent.Parent;
 
         // Below is if user selects correct answer to question
-        if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
+        if (button.Text.Equals(questionResponse.Results[currentQuestion].Correct_answer))
         {
-            if (questionResponse.results.Count > currentQuestion +1)
+            if (questionResponse.Results.Count > currentQuestion +1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
@@ -207,7 +207,7 @@ public partial class Game : ContentPage
         }
         else
         {
-            if (questionResponse.results.Count > currentQuestion +1)
+            if (questionResponse.Results.Count > currentQuestion +1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Red;
