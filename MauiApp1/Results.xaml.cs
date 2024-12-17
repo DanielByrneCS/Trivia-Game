@@ -4,14 +4,13 @@ namespace MauiApp1;
 
 public partial class Results : ContentPage
 {
-
     List<PreviousResult> prev = [];
-    // I decided to avoid using viewmodels as the different gamemodes all have such different parameters that it would have been more effor than it's worth
-	public Results()
-	{
-		InitializeComponent();
-        
-	}
+
+    public Results()
+    {
+        InitializeComponent();
+    }
+
     private void SingleplayerButtonClicked(object sender, EventArgs e)
     {
         SingleplayerModes.IsVisible = true;
@@ -24,87 +23,39 @@ public partial class Results : ContentPage
         MultiplayerModes.IsVisible = true;
     }
 
-
-    // SinglePlayer Set Questions
-    private void SetQuestionsButton(object sender, EventArgs e)
-    {
-        
-        int count = 0;
-        gameLayout.Children.Clear();
-        // Iterates over each line and deserialize it (function is what retrieves all games for that file.)
-        // Reverse so it shows newest first and only shows last 10 games, adding dates and searching would be possible however it is outside of my scope.
-        foreach (string json in GameFetcher("SPSet.json").Reverse())
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                prev.Add(JsonSerializer.Deserialize<PreviousResult>(json));
-                Label label = new Label { 
-                
-                    Text = "Player Name: " + prev[count].PlayerName + "\nQuestions Answered Correctly: " + prev[count].CorrectAnswers + "\n Questions Answered Incorrectly: " + prev[count++].IncorrectAnswers + "\n\n",
-                    HorizontalOptions = LayoutOptions.Center,
-                    TextColor = Colors.CadetBlue,
-                    FontSize = 22,
-                    FontFamily = "ApeMount"
-                    
-                };
-
-                gameLayout.Add(label);
-
-            }
-        }
-
-    }
-
-    // Function Below returns an array of all of the games
-    private static string[] GameFetcher(string fileName)
-    {
-        string targetFile = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
-        if (File.Exists(targetFile))
-        {
-            string jsonString = File.ReadAllText(targetFile);
-
-            string[] jsonObjects = jsonString.Split("\n");
-
-            return jsonObjects;
-        }
-        return [];
-        
-    }
-
-    private void TimedSP(object sender, EventArgs e)
+    // Function to display results based on game mode
+    private void DisplayResults(string fileName, string title)
     {
         int count = 0;
         gameLayout.Children.Clear();
-        // Iterates over each line and deserialize it (function is what retrieves all games for that file.)
-        // Reverse so it shows newest first and only shows last 10 games, adding dates and searching would be possible however it is outside of my scope.
-        foreach (string json in GameFetcher("TimeAttack.json").Reverse())
+
+        foreach (string json in GameFetcher(fileName).Reverse())
         {
             if (!string.IsNullOrEmpty(json))
             {
                 prev.Add(JsonSerializer.Deserialize<PreviousResult>(json));
                 if (count == 10)
                     break;
+
                 Label label = new Label
                 {
-
-                    Text = "\n\nPlayer Name: \n"
-                    + prev[count].PlayerName
-                    + "\nQuestions Answered Correctly: \n"
-                    + prev[count].CorrectAnswers
-                    + "\n Questions Answered Incorrectly: \n"
-                    + prev[count].IncorrectAnswers
-                    + "\nTimer Length: \n"
-                    + prev[count++].TimerLength
-                    + "\n\n",
+                    Text = $"\n\n{title} Results\n\n" +
+                          $"Player Name: {prev[count].PlayerName}\n" +
+                          $"Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
+                          $" Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n\n",
                     FontSize = 20,
-                    FontFamily = "RubikDirt"
+                    FontFamily = "RubikDirt",
+                    HorizontalOptions = LayoutOptions.Center
                 };
+
+                // Add additional information specific to the game mode here (if needed)
+
                 VerticalStackLayout horLayout = new VerticalStackLayout
                 {
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center
-
                 };
+
                 Frame frame = new Frame
                 {
                     HorizontalOptions = LayoutOptions.Center,
@@ -113,8 +64,8 @@ public partial class Results : ContentPage
                     CornerRadius = 20,
                     Content = horLayout,
                     Margin = 10,
-
                 };
+
                 Button button = new Button
                 {
                     Text = "View Game",
@@ -126,67 +77,52 @@ public partial class Results : ContentPage
                     VerticalOptions = LayoutOptions.Center,
                     FontFamily = "RubikDirt"
                 };
-                
+
                 horLayout.Children.Add(label);
                 horLayout.Children.Add(button);
                 frame.Content = horLayout;
-                //horLayout.Children.Add(frame);
-
-                //Content = gameLayout;
                 gameLayout.Add(frame);
 
+                count++;
             }
         }
+    }
+
+    // Function Below returns an array of all of the games
+    private static string[] GameFetcher(string fileName)
+    {
+        string targetFile = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+        if (File.Exists(targetFile))
+        {
+            string jsonString = File.ReadAllText(targetFile);
+            string[] jsonObjects = jsonString.Split("\n");
+            return jsonObjects;
+        }
+        return new string[] { };
+    }
+
+    private void TimedSP(object sender, EventArgs e)
+    {
+        DisplayResults("TimeAttack.json", "Timed Singleplayer");
     }
 
     private void HotPotato(object sender, EventArgs e)
     {
-        int count = 0;
-        gameLayout.Children.Clear();
-        // Iterates over each line and deserialize it (function is what retrieves all games for that file.)
-        // Reverse so it shows newest first and only shows last 10 games, adding dates and searching would be possible however it is outside of my scope.
-        foreach (string json in GameFetcher("TimeAttack.json").Reverse())
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                prev.Add(JsonSerializer.Deserialize<PreviousResult>(json));
-                if (count == 10)
-                    break;
-                Label label = new Label
-                {
-
-                    Text = "Player Name: "
-                    + prev[count].PlayerName
-                    + "\nQuestions Answered Correctly: "
-                    + prev[count].CorrectAnswers
-                    + "\n Questions Answered Incorrectly: "
-                    + prev[count].IncorrectAnswers
-                    + "\nTimer Length: "
-                    + prev[count++].TimerLength
-                    + "\n\n",
-                    HorizontalOptions = LayoutOptions.Center,
-                    TextColor = Colors.CadetBlue,
-                    FontSize = 22,
-                    FontFamily = "ApeMount"
-
-                };
-
-                gameLayout.Add(label);
-
-            }
-        }
+        DisplayResults("HotPotato.json", "Hot Potato"); // Change filename based on game mode
     }
-
-
 
     private void CoopGame(object sender, EventArgs e)
     {
-
+        DisplayResults("CoopGame.json", "Cooperative"); // Change filename based on game mode
     }
 
     private void Versus(object sender, EventArgs e)
     {
-
+        DisplayResults("Versus.json", "Versus"); // Change filename based on game mode
     }
 
+    private void SetQuestionsButton(object sender, EventArgs e)
+    {
+        // Handle setting questions specific to this mode (if needed)
+    }
 }
