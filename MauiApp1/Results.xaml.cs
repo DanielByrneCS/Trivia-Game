@@ -6,6 +6,7 @@ public partial class Results : ContentPage
 {
 
     List<PreviousResult> prev = [];
+    // I decided to avoid using viewmodels as the different gamemodes all have such different parameters that it would have been more effor than it's worth
 	public Results()
 	{
 		InitializeComponent();
@@ -54,7 +55,7 @@ public partial class Results : ContentPage
 
     }
 
-
+    // Function Below returns an array of all of the games
     private static string[] GameFetcher(string fileName)
     {
         string targetFile = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
@@ -81,6 +82,76 @@ public partial class Results : ContentPage
             if (!string.IsNullOrEmpty(json))
             {
                 prev.Add(JsonSerializer.Deserialize<PreviousResult>(json));
+                if (count == 10)
+                    break;
+                Label label = new Label
+                {
+
+                    Text = "\n\nPlayer Name: \n"
+                    + prev[count].PlayerName
+                    + "\nQuestions Answered Correctly: \n"
+                    + prev[count].CorrectAnswers
+                    + "\n Questions Answered Incorrectly: \n"
+                    + prev[count].IncorrectAnswers
+                    + "\nTimer Length: \n"
+                    + prev[count++].TimerLength
+                    + "\n\n",
+                    FontSize = 20,
+                    FontFamily = "RubikDirt"
+                };
+                VerticalStackLayout horLayout = new VerticalStackLayout
+                {
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+
+                };
+                Frame frame = new Frame
+                {
+                    HorizontalOptions = LayoutOptions.Center,
+                    BackgroundColor = Colors.MidnightBlue,
+                    WidthRequest = 350,
+                    CornerRadius = 20,
+                    Content = horLayout,
+                    Margin = 10,
+
+                };
+                Button button = new Button
+                {
+                    Text = "View Game",
+                    HeightRequest = 60,
+                    Margin = 6,
+                    HorizontalOptions = LayoutOptions.Center,
+                    BackgroundColor = Colors.DarkSlateBlue,
+                    TextColor = Colors.White,
+                    VerticalOptions = LayoutOptions.Center,
+                    FontFamily = "RubikDirt"
+                };
+                
+                horLayout.Children.Add(label);
+                horLayout.Children.Add(button);
+                frame.Content = horLayout;
+                //horLayout.Children.Add(frame);
+
+                //Content = gameLayout;
+                gameLayout.Add(frame);
+
+            }
+        }
+    }
+
+    private void HotPotato(object sender, EventArgs e)
+    {
+        int count = 0;
+        gameLayout.Children.Clear();
+        // Iterates over each line and deserialize it (function is what retrieves all games for that file.)
+        // Reverse so it shows newest first and only shows last 10 games, adding dates and searching would be possible however it is outside of my scope.
+        foreach (string json in GameFetcher("TimeAttack.json").Reverse())
+        {
+            if (!string.IsNullOrEmpty(json))
+            {
+                prev.Add(JsonSerializer.Deserialize<PreviousResult>(json));
+                if (count == 10)
+                    break;
                 Label label = new Label
                 {
 
@@ -105,4 +176,17 @@ public partial class Results : ContentPage
             }
         }
     }
+
+
+
+    private void CoopGame(object sender, EventArgs e)
+    {
+
+    }
+
+    private void Versus(object sender, EventArgs e)
+    {
+
+    }
+
 }

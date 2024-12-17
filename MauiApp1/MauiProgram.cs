@@ -16,6 +16,7 @@ namespace MauiApp1
                     fonts.AddFont("ComicNeue-Regular.ttf", "ComicNeue");
                     fonts.AddFont("Serpentine.ttf", "Serpentine");
                     fonts.AddFont("ApeMount.otf", "ApeMount");
+                    fonts.AddFont("RubikDirt.ttf", "Rubik");
                     
                 });
 
