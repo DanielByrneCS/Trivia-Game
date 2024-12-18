@@ -19,12 +19,11 @@ namespace MauiApp1
         public List<String> PlayerNames { get; set; }
 
         // Any timed Game
-        public int TimerLength { get; set; }
+        public int Timer { get; set; }
+        public string Winner { get; set; }
+
+        public string HotPotato { get; set; }
     }
 
-    public class PreviousGames
-    {
-        public List<PreviousResult> PreviousGamesPlayed { get; set; }
-    }
-
+  
 }

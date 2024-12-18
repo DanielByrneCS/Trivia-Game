@@ -86,20 +86,19 @@ public partial class Results : ContentPage
                     break;
                 Label label = new Label
                 {
-
-                    Text = "\n\nPlayer Name: \n"
-                    + prev[count].PlayerName
-                    + "\nQuestions Answered Correctly: \n"
-                    + prev[count].CorrectAnswers
-                    + "\n Questions Answered Incorrectly: \n"
-                    + prev[count].IncorrectAnswers
-                    + "\nTimer Length: \n"
-                    + prev[count++].TimerLength
-                    + "\n\n",
+                    Text = $"\n\n{title} Results\n\n" +
+                          $"Total Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
+                          $"Total Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n",
                     FontSize = 20,
                     FontFamily = "RubikDirt"
                 };
-                VerticalStackLayout horLayout = new VerticalStackLayout
+
+                if (title.Contains("Timed") || title.Contains("Potato"))
+                {
+                    label.Text += $"Timer Length: {prev[count].TimerLength}\n";
+                }
+
+                VerticalStackLayout verticalLayout = new VerticalStackLayout
                 {
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center
@@ -186,7 +185,7 @@ public partial class Results : ContentPage
 
     private void Versus(object sender, EventArgs e)
     {
-
+        DisplayResults("Versus.json", "Versus"); // Multiplayer versus (everyone answers their own questions)
     }
 
 }

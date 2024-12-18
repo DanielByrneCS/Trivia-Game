@@ -5,7 +5,7 @@
              Title="MPGame"
               BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
-    <VerticalStackLayout>
+    <VerticalStackLayout HeightRequest="700">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -57,7 +57,7 @@
            TextColor="{DynamicResource PrimaryTextColor}"
            HorizontalOptions="Center"
            MaximumWidthRequest="400"/>
-        <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
+        <StackLayout x:Name="buttonLayout" HorizontalOptions="Center" VerticalOptions="End" Margin="20"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />

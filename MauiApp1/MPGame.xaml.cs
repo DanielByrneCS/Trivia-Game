@@ -37,6 +37,7 @@ public partial class MPGame : ContentPage
     private int difficulty;
     private int numQuestions;
     private int questionType;
+    private int[] playerScores = new int[4];
     
     // I felt another class for multiplayer, although repeating code, was better
     // Game.xaml.cs is big enough to navigate so this will avoid headaches, would be very easy to combine them if need
@@ -120,7 +121,7 @@ public partial class MPGame : ContentPage
 
     private async void GameLoop(int currPlayer)
     {
-        currentPlayerLabel.Text = "Current Player: " + (currentPlayer + 1);
+        currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
         if (currentQuestion == 0)
             await Task.Delay(1000);
         else
@@ -212,6 +213,9 @@ public partial class MPGame : ContentPage
                 else
                 {
                     await GetQuestions();
+                    playerScores[currentPlayer] = QuestionsCorrect;
+                    QuestionsCorrect = 0;
+                    QuestionsIncorrect = 0;
                     currentPlayer++;
                     currentQuestion = 0;
                     GameLoop(currentPlayer);
@@ -241,6 +245,9 @@ public partial class MPGame : ContentPage
                 else
                 {
                     await GetQuestions();
+                    playerScores[currentPlayer] = QuestionsCorrect;
+                    QuestionsCorrect = 0;
+                    QuestionsIncorrect = 0;
                     currentPlayer++;
                     currentQuestion = 0;
                     GameLoop(currentPlayer);
@@ -254,7 +261,30 @@ public partial class MPGame : ContentPage
 
     private async void GameEnd(int questionsCorrect, int questionsIncorrect)
     {
-        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, names));
+        int highest = 0;
+        int highestpos = 0;
+        for (int i = 0; i < numOfPlayers; i++)
+        {
+            if (playerScores[i] > highest)
+            {
+                highest = playerScores[i];
+                highestpos = i;
+            }
+        }
+
+        int drawChecker = int.MaxValue;
+        for(int i = 0; i < numOfPlayers; i++)
+        {
+            if (playerScores[i] == drawChecker)
+            {
+                names[i] = "Tie: " + names[i];
+            }
+            drawChecker = playerScores[i];
+            
+        }
+
+
+        await Navigation.PushAsync(new ResultsPage(questionsCorrect, questionsIncorrect, Difficulty, NumberOfQuestions, GameType, names, names[highestpos]));
         
     }
 

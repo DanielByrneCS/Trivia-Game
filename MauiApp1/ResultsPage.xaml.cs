@@ -20,7 +20,7 @@ public partial class ResultsPage : ContentPage
             IncorrectAnswers = questionsIncorrect,
             Difficulty = difficulty,
             QuestionType = questionType,
-            PlayerList = playerList,
+            PlayerNames = playerList,
             HotPotato = hotPotato,
             RanOut = false,
             Timer = timer
@@ -56,7 +56,7 @@ public partial class ResultsPage : ContentPage
             IncorrectAnswers = questionsIncorrect,
             Difficulty = difficulty,
             QuestionType = questionType,
-            PlayerList =  playerList,
+            PlayerNames =  playerList,
             HotPotato = hotPotato,
             RanOut = ranOut,
             Timer = timer
@@ -156,7 +156,7 @@ public partial class ResultsPage : ContentPage
     }
 
     // MP Versus
-    public ResultsPage(int questionsCorrect, int questionsIncorrect, string difficulty , string numberOfQuestions, string questionType, List<string> names)
+    public ResultsPage(int questionsCorrect, int questionsIncorrect, string difficulty , string numberOfQuestions, string questionType, List<string> names, string winner)
     {
         InitializeComponent();
         questionsCorrectLabel.Text += questionsCorrect.ToString();
@@ -167,6 +167,7 @@ public partial class ResultsPage : ContentPage
             CorrectAnswers = questionsCorrect,
             IncorrectAnswers = questionsIncorrect,
             PlayerNames = names,
+            Winner = winner
         };
 
         // turns the object into json format

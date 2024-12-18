@@ -1,4 +1,5 @@
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace MauiApp1;
@@ -299,13 +300,21 @@ public partial class MPTimedGame : ContentPage
     private async void GameEnd(int questionsCorrect, int questionsIncorrect)
     {
         // Occurs when 50 questions are answered as opposed to time running out, person who answered last question will be hot potato
-        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names, ranOut));
+        // Had to use the main thread for the new page as i would get a COMException otherwise, not too sure why but seen this on ms docs.
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names, ranOut));
+        });
     }
     private async void GameEnd()
     {
         // int timerLength, string hotPotato, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType, List<string> playerList)
-        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names));
-        
+        await Task.Delay(2000);
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), names[currentPlayer], QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, names));
+
+        });
     }
 
     string APILinkCreator(int difficulty, int questionType)

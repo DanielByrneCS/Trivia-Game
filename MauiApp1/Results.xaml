@@ -18,6 +18,7 @@
                 <StackLayout x:Name="MultiplayerModes" IsVisible="False">
                     <Button Text="Co-op" Clicked="CoopGame" />
                     <Button Text="Hot Potato" Clicked="HotPotato" />
+                    <Button Text="Versus" Clicked="Versus" />
                 </StackLayout>
             </StackLayout>
         
