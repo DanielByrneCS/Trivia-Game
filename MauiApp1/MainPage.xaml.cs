@@ -36,6 +36,8 @@ namespace MauiApp1
                 firstRun = false;
                 ChangeTheme(Preferences.Get("isLightTheme", false));
             }
+            gameMode = 0;
+
             
             
         }
