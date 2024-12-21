@@ -37,17 +37,47 @@ public partial class Results : ContentPage
                 if (count == 10)
                     break;
 
+
                 Label label = new Label
                 {
-                    Text = $"\n\n{title} Results\n\n" +
-                          $"Player Name: {prev[count].PlayerName}\n" +
-                          $"Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
-                          $" Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n\n",
+                    Text = $"\n\n{title} Results\n\n",
                     FontSize = 20,
                     FontFamily = "RubikDirt",
                     HorizontalOptions = LayoutOptions.Center
                 };
 
+                if (title.Contains("Potato"))
+                {
+                    if (prev[count].RanOut)
+                        label.Text += "Ran out of Questions";
+                    else
+                        label.Text += $"Hot Potato was: {prev[count].HotPotato}";
+                    label.Text += $"Total Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
+                                  $"Total Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n" +
+                                  $"Timer Length: {prev[count].Timer}\n" +
+                                  $"Player list:\n{string.Join('\n', prev[count].PlayerNames)}";
+                }
+                else if (title.Contains("Versus"))
+                {
+                    label.Text += $"Winner was: {prev[count].Winner}\n"+
+                                  $"They answered: {prev[count].CorrectAnswers} Questions Correctly\n" +
+                                  $"They answered: {prev[count].IncorrectAnswers} Questions Inorrectly\n" +
+                                  $"Player list:\n{string.Join('\n', prev[count].PlayerNames)}";
+                }
+                // Else is used for all singleplayer gamemodes then more if statements to determine if timer length is required (small bit more efficient)
+                else
+                {
+                    label.Text += $"Player Name: {prev[count].PlayerName}\n" +
+                                  $"Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
+                                  $"Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n";
+
+                }
+                if (title.Contains("Timed Singleplayer"))
+                {
+                    if (prev[count].RanOut)
+                        label.Text += "Ran out of Questions, Well Done!\n";
+                    label.Text += $"Timer Length: {prev[count].Timer}\n";
+                }
                 // Add additional information specific to the game mode here (if needed)
 
                 VerticalStackLayout horLayout = new VerticalStackLayout
@@ -118,7 +148,7 @@ public partial class Results : ContentPage
 
     private void Versus(object sender, EventArgs e)
     {
-        DisplayResults("Versus.json", "Versus"); // Change filename based on game mode
+        DisplayResults("MPVersus.json", "Versus"); // Change filename based on game mode
     }
 
     private void SetQuestionsButton(object sender, EventArgs e)

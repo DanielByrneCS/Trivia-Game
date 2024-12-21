@@ -6,6 +6,12 @@
               BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
     <VerticalStackLayout>
+        <Label x:Name="timerLabel" 
+               Text="{Binding Count}" 
+               FontSize="Large" 
+               TextColor="{DynamicResource PrimaryTextColor}" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -15,17 +21,6 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <Label Text="{Binding Difficulty}"
-                   FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}"
-                   HorizontalOptions="Center"
-                   Grid.Column="1"/>
-            <Label Text="{Binding GameType}"
-                   FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}" 
-                   HorizontalOptions="End"
-                   Grid.Column="2"/>
         </Grid>
         <Line/>
         <Label Text="" 
@@ -40,11 +35,13 @@
            TextColor="{DynamicResource PrimaryTextColor}"/>
         <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Orange"/>
         <Label x:Name="questionTitle"
-           Text=""
-           FontSize="Large"
-           TextColor="{DynamicResource PrimaryTextColor}"
-           HorizontalOptions="Center"
-           MaximumWidthRequest="400"/>
+               Text=""
+               FontSize="Large"
+               TextColor="{DynamicResource PrimaryTextColor}"
+               FontFamily="Serpentine"
+               HorizontalOptions="Center"
+               MaximumWidthRequest="400"
+               HeightRequest="260" />
         <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
         <Grid>
             <Grid.RowDefinitions>

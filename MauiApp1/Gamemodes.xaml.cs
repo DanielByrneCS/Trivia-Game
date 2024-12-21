@@ -14,12 +14,8 @@ public partial class Gamemodes : ContentPage
             // Disables the singleplayer only gamemode
 			gm1.IsEnabled = false;
             // unhides label to state unavailable with multiplayer
-            gm1.IsVisible = true;
+            gm1L.IsVisible = true;
             gm1.BackgroundColor = (Color)Application.Current.Resources["TertiaryBackgroundColor"];
-
-
-
-            
         }
 		else
 		{

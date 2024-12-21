@@ -22,6 +22,7 @@ namespace MauiApp1
         public int Timer { get; set; }
         public string Winner { get; set; }
 
+        public bool RanOut { get; set; }
         public string HotPotato { get; set; }
     }
 

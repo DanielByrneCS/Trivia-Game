@@ -1,9 +1,12 @@
+using Plugin.Maui.Audio;
 using System.Text.Json;
 
 namespace MauiApp1;
 
 public partial class TimedGame : ContentPage
 {
+    private IAudioPlayer correctAudio;
+    private IAudioPlayer incorrectAudio;
     public TimedGame(int difficulty, int type, string playerName)
     {
         InitializeComponent();
@@ -137,20 +140,34 @@ public partial class TimedGame : ContentPage
     {
         if (currentQuestion == 0)
         {
+            IsBusy = true;
             await GetQuestions(difficulty, questionType);
             await Task.Delay(1000);
+            questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+            questionTitle.Text = questionResponse.results[currentQuestion].question;
+            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
+            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
+            questionTitle.TranslateTo(0, 1000, 0);
+            buttonLayout.TranslateTo(0, 1000, 0);
+            questionTitle.TranslateTo(0, 0, 400);
+            await buttonLayout.TranslateTo(0, 0, 400);
         }
             
         else
         {
-            IsBusy = true;
             await Task.Delay(500);
+            questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+            questionTitle.Text = questionResponse.results[currentQuestion].question;
+            IsBusy = true;
             
+            questionTitle.TranslateTo(0, 1000, 0);
+            buttonLayout.TranslateTo(0, 1000, 0);
+            questionTitle.TranslateTo(0, 0, 400);
+            await buttonLayout.TranslateTo(0, 0, 400);
+
         }
         buttonLayout.Children.Clear();
-        questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
         IsBusy = false;
-        questionTitle.Text = questionResponse.results[currentQuestion].question;
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
         possibleAnswers.Sort();
@@ -195,7 +212,7 @@ public partial class TimedGame : ContentPage
         buttonLayout.Children.Add(view2);
 
     }
-    private void AnswerClicked(object sender, EventArgs e)
+    private async void AnswerClicked(object sender, EventArgs e)
     {
       
         Button button = (Button)sender;
@@ -206,6 +223,9 @@ public partial class TimedGame : ContentPage
         // or if the user gets 50 questions as thats the api limits
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
+            correctAudio.Play();
+            questionTitle.TranslateTo(1000, 0, 300);
+            await buttonLayout.TranslateTo(1000, 0, 300);
             if (questionResponse.results.Count > currentQuestion +1 && timer.Enabled)
             {
                 IsBusy = true;
@@ -232,6 +252,9 @@ public partial class TimedGame : ContentPage
         }
         else
         {
+            incorrectAudio.Play();
+            questionTitle.TranslateTo(0, 1000, 300);
+            await buttonLayout.TranslateTo(0, 1000, 300);
             if (questionResponse.results.Count > currentQuestion +1 && timer.Enabled)
             {
                 IsBusy = true;

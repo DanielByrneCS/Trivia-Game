@@ -1,11 +1,16 @@
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Plugin.Maui.Audio;
 
 
 namespace MauiApp1;
 
 public partial class MPTimedGame : ContentPage
 {
+    private IAudioPlayer correctAudio;
+    private IAudioPlayer incorrectAudio;
+
+
     // Dictionary helps convert int difficulty to string for api url creation
     Dictionary<int, string> difficultyLevels = new Dictionary<int, string>
     {
@@ -60,6 +65,7 @@ public partial class MPTimedGame : ContentPage
     // Game.xaml.cs is big enough to navigate so this will avoid headaches, would be very easy to combine them if need
     public MPTimedGame(int difficulty, int questionType, int numOfPlayers, List<string> names)
     {
+
         this.numOfPlayers = numOfPlayers;
         this.difficulty = difficulty;
         numQuestions = 50;
@@ -73,6 +79,7 @@ public partial class MPTimedGame : ContentPage
         QuestionsLabel(numQuestions);
         DifficultyLabel(difficulty);
         TypeLabel(questionType);
+        count = Preferences.Get("TimerLength", 60);
         timer.Start();
         BindingContext = this;
 
@@ -89,7 +96,12 @@ public partial class MPTimedGame : ContentPage
         {
             --Count;
             if (Count == 0)
+            {
+                timer.Stop();
                 GameEnd();
+                
+            }
+                
 
 
         };
@@ -160,17 +172,39 @@ public partial class MPTimedGame : ContentPage
     {
         currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
         if (currentQuestion == 0)
+        {
+            questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+            questionTitle.Text = questionResponse.results[currentQuestion].question;
+            IsBusy = true;
+            // Gives time to load
             await Task.Delay(1000);
+            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
+            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
+            
+            await questionTitle.TranslateTo(0, 1000, 0);
+            buttonLayout.TranslateTo(0, 1000, 0);
+            questionTitle.TranslateTo(0, 0, 400);
+            buttonLayout.TranslateTo(0, 0, 400); 
+            
+        }
+            
         else
         {
-            IsBusy = true;
-            await Task.Delay(500);
+            questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
+            questionTitle.Text = questionResponse.results[currentQuestion].question;
+            await Task.Delay(400);
+            
+            questionTitle.TranslateTo(0, 1000, 0);
+            buttonLayout.TranslateTo(0, 1000, 0);
+            questionTitle.TranslateTo(0, 0, 400);
+            await buttonLayout.TranslateTo(0, 0, 400);
 
         }
+        // Line below turns things like &nbsp into what it should be (apostrophes etc)
+       
         buttonLayout.Children.Clear();
-        questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
         IsBusy = false;
-        questionTitle.Text = questionResponse.results[currentQuestion].question;
+        
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
         possibleAnswers.Sort();
@@ -224,10 +258,15 @@ public partial class MPTimedGame : ContentPage
         Button button = (Button)sender;
 
         StackLayout buttonLayout = (StackLayout)button.Parent.Parent;
-
+        
         // Below is if user selects correct answer to question
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
+            // Animation for a Correct Answer
+            correctAudio.Play();
+            questionTitle.TranslateTo(1000, 0, 300);
+            await buttonLayout.TranslateTo(1000, 0, 300);
+
             if (questionResponse.results.Count > currentQuestion + 1)
             {
                 IsBusy = true;
@@ -239,7 +278,7 @@ public partial class MPTimedGame : ContentPage
                 else
                     currentPlayer++;
                 questionsCor.Text = QuestionsCorrect.ToString();
-                questionTitle.Text = "";
+                
                 GameLoop(currentPlayer);
             }
             else
@@ -247,8 +286,8 @@ public partial class MPTimedGame : ContentPage
 
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
-                questionTitle.Text = "";
-                if(currentPlayer >= numOfPlayers -1)
+                
+                if (currentPlayer >= numOfPlayers -1)
                     GameEnd(QuestionsCorrect, QuestionsIncorrect);
                 else
                 {
@@ -262,6 +301,10 @@ public partial class MPTimedGame : ContentPage
         }
         else
         {
+            incorrectAudio.Play();
+            // Animation for an Incorrect Answer
+            questionTitle.TranslateTo(0, 1000, 300);
+            await buttonLayout.TranslateTo(0, 1000, 300);
             if (questionResponse.results.Count > currentQuestion + 1)
             {
                 IsBusy = true;
@@ -269,14 +312,14 @@ public partial class MPTimedGame : ContentPage
                 currentQuestion++;
                 QuestionsIncorrect++;
                 questionsIncor.Text = QuestionsIncorrect.ToString();
-                questionTitle.Text = "";
+                
                 GameLoop(currentPlayer);
             }
             else
             {
                 button.BackgroundColor = Colors.Red;
                 QuestionsIncorrect++;
-                questionTitle.Text = "";
+                
                 if (currentPlayer == numOfPlayers)
                 {
                     ranOut = true;

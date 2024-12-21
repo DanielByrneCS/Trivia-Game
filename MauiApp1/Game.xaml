@@ -21,16 +21,6 @@
                    TextColor="{DynamicResource PrimaryTextColor}"
                    HorizontalOptions="Start"
                    Grid.Column="0"/>
-            <Label Text="{Binding Difficulty}"
-                   FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}"
-                   HorizontalOptions="Center"
-                   Grid.Column="1"/>
-            <Label Text="{Binding GameType}"
-                   FontSize="Medium" 
-                   TextColor="{DynamicResource PrimaryTextColor}" 
-                   HorizontalOptions="End"
-                   Grid.Column="2"/>
         </Grid>
    
     <Label x:Name="questionNumber" 
@@ -38,12 +28,14 @@
            FontSize="Medium"
            TextColor="{DynamicResource PrimaryTextColor}"/>
     <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Orange"/>
-    <Label x:Name="questionTitle"
-           Text=""
-           FontSize="Large"
-           TextColor="{DynamicResource PrimaryTextColor}"
-           HorizontalOptions="Center"
-           MaximumWidthRequest="400"/>
+        <Label x:Name="questionTitle"
+               Text=""
+               FontSize="Large"
+               TextColor="{DynamicResource PrimaryTextColor}"
+               FontFamily="Serpentine"
+               HorizontalOptions="Center"
+               MaximumWidthRequest="400"
+               HeightRequest="260" />
         <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
         <Grid>
             <Grid.RowDefinitions>

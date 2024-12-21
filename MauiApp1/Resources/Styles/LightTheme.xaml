@@ -7,7 +7,7 @@
     <!--Below is Light theme-->
     
     <Color x:Key="PrimaryBackgroundColor">#D5D5D5</Color>
-    <Color x:Key="SecondaryBackgroundColor">#ACACAC</Color>
+    <Color x:Key="SecondaryBackgroundColor">#FF6347</Color>
     <Color x:Key="TertiaryBackgroundColor">#2f55ff</Color>
 
     <Color x:Key="PrimaryTextColor">#151515</Color>
