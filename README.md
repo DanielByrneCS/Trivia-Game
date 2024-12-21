@@ -39,5 +39,5 @@ The project utilizes an external API to fetch trivia questions Thanks to Open Tr
 
 # Future Enhancements
 
-    Leaderboards: Implement a leaderboard to track high scores.
-    Timed runs: To be yet implemented
+    ~~See Previous Games: Implement to track high scores.
+    Timed runs: To be yet implemented~~
