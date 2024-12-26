@@ -30,7 +30,7 @@
            TextColor="{DynamicResource PrimaryTextColor}"/>
     <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Orange"/>
         <Label x:Name="questionTitle"
-               Text="Hello"
+               Text=""
                FontSize="Large"
                TextColor="{DynamicResource PrimaryTextColor}"
                FontFamily="Serpentine"

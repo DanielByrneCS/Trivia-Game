@@ -209,7 +209,7 @@ public partial class MPGame : ContentPage
                 Margin = 10
             };
             answer.Clicked += AnswerClicked;
-
+            // Aligns first 2 to first row to make a 2x2 grid for mcq (or both horizontal for true/false)
             if (j <= 1)
                 view1.Children.Add(answer);
             else
