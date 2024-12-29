@@ -6,7 +6,11 @@
               BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
              >
     <VerticalStackLayout>
-        <Label Text="{Binding Count, StringFormat='Timer : {0}'}" FontSize="Header"/>
+        <Label Text="{Binding Count, StringFormat='Timer : {0}'}"
+       FontSize="Large" 
+       TextColor="{DynamicResource PrimaryTextColor}" 
+       HorizontalOptions="Center" 
+       VerticalOptions="Center"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -38,26 +42,5 @@
                MaximumWidthRequest="400"
                HeightRequest="200" />
         <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-
-            </Grid.ColumnDefinitions>
-               
-            <Label x:Name="questionsCor" 
-                   Text="" 
-                   Grid.Column="0"
-                   TextColor="{DynamicResource PrimaryTextColor}"
-                   HorizontalOptions="Start"/>
-            <Label x:Name="questionsIncor" 
-                   Text="" 
-                   TextColor="{DynamicResource PrimaryTextColor}" 
-                   Grid.Column="1"
-                   HorizontalOptions="End"/>
-        </Grid>
     </VerticalStackLayout>
 </ContentPage>

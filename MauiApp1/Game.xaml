@@ -37,26 +37,5 @@
                MaximumWidthRequest="400"
                HeightRequest="260" />
         <StackLayout x:Name="buttonLayout" HorizontalOptions="Center"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-
-            </Grid.ColumnDefinitions>
-               
-            <Label x:Name="questionsCor" 
-                   Text="" 
-                   Grid.Column="0"
-                   TextColor="{DynamicResource PrimaryTextColor}"
-                   HorizontalOptions="Start"/>
-            <Label x:Name="questionsIncor" 
-                   Text="" 
-                   TextColor="{DynamicResource PrimaryTextColor}" 
-                   Grid.Column="1"
-                   HorizontalOptions="End"/>
-        </Grid>
     </VerticalStackLayout>
 </ContentPage>

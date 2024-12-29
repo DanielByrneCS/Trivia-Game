@@ -49,27 +49,14 @@
            HorizontalOptions="Center"
            MaximumWidthRequest="390"
            HeightRequest="290" />
-        <StackLayout x:Name="buttonLayout" HorizontalOptions="Center" VerticalOptions="Center" Margin="10"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-
-            </Grid.ColumnDefinitions>
-
-            <Label x:Name="questionsCor" 
-                   Text="" 
-                   Grid.Column="0"
-                   TextColor="{DynamicResource PrimaryTextColor}"
-                   HorizontalOptions="Start"/>
-            <Label x:Name="questionsIncor" 
-                   Text="" 
-                   TextColor="{DynamicResource PrimaryTextColor}" 
-                   Grid.Column="1"
-                   HorizontalOptions="End"/>
-        </Grid>
+        <VerticalStackLayout BackgroundColor="Yellow">
+            <StackLayout x:Name="buttonLayout" 
+                     HorizontalOptions="Center" 
+                     VerticalOptions="Center" 
+                     Margin="10"
+                     BackgroundColor="LightGray">
+                <Button Text="Test Button"/>
+            </StackLayout>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -130,14 +130,6 @@ public partial class MPGame : ContentPage
     private async void GameLoop(int currPlayer)
     {
         currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
-        //if (currentQuestion == 0)
-        //    await Task.Delay(1000);
-        //else
-        //{
-        //    IsBusy = true;
-        //    await Task.Delay(500);
-
-        //}
         if (currentQuestion == 0)
         {
             IsBusy = true;
@@ -173,7 +165,7 @@ public partial class MPGame : ContentPage
             await buttonLayout.TranslateTo(0, 0, 400);
 
         }
-        buttonLayout.Children.Clear();
+        //buttonLayout.Children.Clear();
         IsBusy = false;
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
@@ -189,7 +181,13 @@ public partial class MPGame : ContentPage
             secondaryBackgroundColor = Color.FromArgb("FF6347");
 
         }
-        HorizontalStackLayout view1 = new HorizontalStackLayout();
+        HorizontalStackLayout view1 = new HorizontalStackLayout()
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Margin = 10,
+            HeightRequest = 100
+        };
         HorizontalStackLayout view2 = new HorizontalStackLayout();
         // Line below gets rid of &nbsp; and all those html formatting things from the json
 
@@ -203,22 +201,26 @@ public partial class MPGame : ContentPage
                 Text = possibleAnswers[j],
                 TextColor = primaryTextColor,
                 BackgroundColor = secondaryBackgroundColor,
+                WidthRequest = 200,
+                HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.Center,
-                MinimumWidthRequest = 100,
-                FontSize = 30,
-                Margin = 10
+                VerticalOptions = LayoutOptions.Center,
+                Margin = new Thickness(10)
             };
             answer.Clicked += AnswerClicked;
-            // Aligns first 2 to first row to make a 2x2 grid for mcq (or both horizontal for true/false)
+            // Aligns first 2 to first row to make a 2x2 grid for mcq(or both horizontal for true / false)
             if (j <= 1)
                 view1.Children.Add(answer);
             else
                 view2.Children.Add(answer);
 
-
         }
+        questionTitle.IsVisible = false;
         buttonLayout.Children.Add(view1);
         buttonLayout.Children.Add(view2);
+        buttonLayout.IsVisible = true;
+
+        
 
 
 
@@ -234,15 +236,14 @@ public partial class MPGame : ContentPage
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
             correctAudio.Play();
-            questionTitle.TranslateTo(1000, 0, 300);
-            await buttonLayout.TranslateTo(1000, 0, 300);
+            questionTitle.TranslateTo(3000, 0, 300);
+            await buttonLayout.TranslateTo(3000, 0, 300);
             if (questionResponse.results.Count > currentQuestion + 1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
-                questionsCor.Text = QuestionsCorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop(currentPlayer);
             }
@@ -278,7 +279,6 @@ public partial class MPGame : ContentPage
                 button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
-                questionsIncor.Text = QuestionsIncorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop(currentPlayer);
             }

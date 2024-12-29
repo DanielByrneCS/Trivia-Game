@@ -98,6 +98,9 @@
 	  <MauiXaml Update="CoopGame.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="InspectGame.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MPTimedGame.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

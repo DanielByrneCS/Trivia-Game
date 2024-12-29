@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.InspectGame"
+             Title="Inspect Game"
+             BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
+    <VerticalStackLayout>
+        <Label Text="Game Result" FontSize="Header" FontFamily="Serpentine" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource PrimaryTextColor}"/>
+        <Label Text="{Binding Text}" FontSize="Header" FontFamily="ApeMount" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource PrimaryTextColor}"/>
+        <Label Text="Screenshot this and share with a friend!" FontSize="Header" FontFamily="ApeMount" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Purple"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -17,7 +17,7 @@
                     CornerRadius="60"
                     BorderColor="{StaticResource SecondaryBackgroundColor}"/>
         </Border>
-        <Label Text="Timer Length" FontSize="Medium" TextColor="{DynamicResource PrimaryTextColor}" HorizontalOptions="Center"/>
+        <Label Text="Timer Length" FontSize="Large" TextColor="{DynamicResource PrimaryTextColor}" HorizontalOptions="Center" FontFamily="Serpentine"/>
         <Label Text="{Binding TimerLength}" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Large" HorizontalOptions="Center"/>
         <Grid HorizontalOptions="Center">
             <Grid.RowDefinitions>
@@ -50,6 +50,7 @@
             <Button Grid.Row="1" Grid.Column="1" 
                     Text="120 Seconds"
                     Clicked="TimerButton" 
+                    
                     TextColor="{DynamicResource PrimaryTextColor}"
                     BackgroundColor="{StaticResource SecondaryBackgroundColor}"/>
             

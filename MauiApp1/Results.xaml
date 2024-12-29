@@ -11,14 +11,14 @@
                 <Button x:Name="MultiplayerButton" Text="Multiplayer" Clicked="MultiplayerButtonClicked" WidthRequest="300" Margin="10,10,10,30" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
 
                 <StackLayout x:Name="SingleplayerModes" IsVisible="False">
-                    <Button Text="Time Attack" Clicked="TimedSP" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                    <Button Text="Set Questions" Clicked="SetQuestionsButton" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
+                    <Button Text="Time Attack" Clicked="TimedSP" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" WidthRequest="160" Margin="4"/>
+                    <Button Text="Set Questions" Clicked="SetQuestionsButton" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" WidthRequest="180" Margin="4"/>
                 </StackLayout>
 
                 <StackLayout x:Name="MultiplayerModes" IsVisible="False">
-                    <Button Text="Co-op" Clicked="CoopGame" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                    <Button Text="Hot Potato" Clicked="HotPotato" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
-                    <Button Text="Versus" Clicked="Versus" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}"/>
+                    <Button Text="Co-op" Clicked="CoopGame" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" WidthRequest="140" Margin="4"/>
+                    <Button Text="Hot Potato" Clicked="HotPotato" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" WidthRequest="140" Margin="4"/>
+                    <Button Text="Versus" Clicked="Versus" BackgroundColor="{StaticResource SecondaryBackgroundColor}" TextColor="{DynamicResource PrimaryTextColor}" WidthRequest="140" Margin="4"/>
                 </StackLayout>
             </StackLayout>
         

@@ -126,7 +126,8 @@
             </Grid>
             <Label x:Name="timerTip" 
                    Text="Timer Length can be changed in settings" 
-                   FontSize="Medium"
+                   FontSize="32"
+                   FontFamily="Serpentine"
                    TextColor="{DynamicResource PrimaryTextColor}"
                    HorizontalOptions="Center"
                    IsVisible="False"/>

@@ -73,7 +73,7 @@ public partial class MPTimedGame : ContentPage
         this.names = names;
         InitializeComponent();
         httpClient = new HttpClient();
-        GetQuestions();
+        
         InitialiseTimer();
         GameLoop(currentPlayer);
         QuestionsLabel(numQuestions);
@@ -173,6 +173,7 @@ public partial class MPTimedGame : ContentPage
         currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
         if (currentQuestion == 0)
         {
+            await GetQuestions();
             questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
             questionTitle.Text = questionResponse.results[currentQuestion].question;
             IsBusy = true;
@@ -264,8 +265,8 @@ public partial class MPTimedGame : ContentPage
         {
             // Animation for a Correct Answer
             correctAudio.Play();
-            questionTitle.TranslateTo(1000, 0, 300);
-            await buttonLayout.TranslateTo(1000, 0, 300);
+            questionTitle.TranslateTo(3000, 0, 300);
+            await buttonLayout.TranslateTo(3000, 0, 300);
 
             if (questionResponse.results.Count > currentQuestion + 1)
             {
@@ -277,7 +278,6 @@ public partial class MPTimedGame : ContentPage
                     currentPlayer = 0;
                 else
                     currentPlayer++;
-                questionsCor.Text = QuestionsCorrect.ToString();
                 
                 GameLoop(currentPlayer);
             }
@@ -311,7 +311,6 @@ public partial class MPTimedGame : ContentPage
                 button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
-                questionsIncor.Text = QuestionsIncorrect.ToString();
                 
                 GameLoop(currentPlayer);
             }

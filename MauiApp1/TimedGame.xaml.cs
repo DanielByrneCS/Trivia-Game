@@ -68,7 +68,6 @@ public partial class TimedGame : ContentPage
     Color primaryTextColor;
     Color secondaryBackgroundColor;
     string questionType;
-    bool ranOut;
     string playerName;
     int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
 
@@ -224,15 +223,14 @@ public partial class TimedGame : ContentPage
         if (button.Text.Equals(questionResponse.results[currentQuestion].correct_answer))
         {
             correctAudio.Play();
-            questionTitle.TranslateTo(1000, 0, 300);
-            await buttonLayout.TranslateTo(1000, 0, 300);
+            questionTitle.TranslateTo(3000, 0, 300);
+            await buttonLayout.TranslateTo(3000, 0, 300);
             if (questionResponse.results.Count > currentQuestion +1 && timer.Enabled)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
-                questionsCor.Text = QuestionsCorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop(1,1);
             }
@@ -242,9 +240,11 @@ public partial class TimedGame : ContentPage
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                ranOut = true;
+                
                 if (questionResponse.results.Count > currentQuestion + 1)
-                    GameEnd(ranOut);
+                {
+                    GameEnd(true);
+                }
                 else
                     GameEnd();
              
@@ -261,17 +261,16 @@ public partial class TimedGame : ContentPage
                 button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
-                questionsIncor.Text = QuestionsIncorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop(1,1);
             }
             else
             {
                 button.BackgroundColor = Colors.Red;
-                QuestionsIncorrect++;
                 questionTitle.Text = "";
+                QuestionsIncorrect++;
                 if (questionResponse.results.Count > currentQuestion + 1)
-                    GameEnd(ranOut);
+                    GameEnd(true);
                 else
                     GameEnd();
 
@@ -283,7 +282,7 @@ public partial class TimedGame : ContentPage
     private async void GameEnd(bool ranOut)
     {
         // Occurs when 50 questions are answered as opposed to time running out, person who answered last question will be hot potato
-        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), playerName, QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, ranOut));
+        await Navigation.PushAsync(new ResultsPage(Preferences.Get("TimerLength", 60), playerName, QuestionsCorrect, QuestionsIncorrect, Difficulty, GameType, true));
     }
     private async void GameEnd()
     {

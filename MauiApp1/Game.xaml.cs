@@ -43,14 +43,20 @@ public partial class Game : ContentPage
     public string NumberOfQuestions {  get; set; }
     public string GameType { get; set; }
 
+    public int numQuestions { get; set; }
+    public int difficulty { get; set; }
 
+    public int type { get; set; }
 
     public Game(int difficulty, int numQuestions, int type, string name)
     {
         InitializeComponent();
         this.name = name;
+        this.difficulty = difficulty;
+        this.type = type;
+        this.numQuestions = numQuestions;
         httpClient = new HttpClient();
-        GetQuestions(difficulty, numQuestions, type );
+        
         GameLoop();
         QuestionsLabel(numQuestions);
         DifficultyLabel(difficulty);
@@ -127,6 +133,7 @@ public partial class Game : ContentPage
             correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
             incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
             IsBusy = true;
+            await GetQuestions(difficulty, numQuestions, type);
             await Task.Delay(1000);
             questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
             questionTitle.Text = questionResponse.results[currentQuestion].question;
@@ -172,6 +179,7 @@ public partial class Game : ContentPage
         {
             questionResponse.results[currentQuestion].incorrect_answers[j] = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].incorrect_answers[j]);
             possibleAnswers[j] = System.Web.HttpUtility.HtmlDecode(possibleAnswers[j]);
+            // Feels like an error on net maui with rendering buttons as they simply wont appear. This has driven me nuts for a week straight trying to debug
             Button answer = new Button
             {
                 Text = possibleAnswers[j],
@@ -207,15 +215,14 @@ public partial class Game : ContentPage
         {
             // Animation for a Correct Answer
             correctAudio.Play();
-            questionTitle.TranslateTo(1000, 0, 300);
-            await buttonLayout.TranslateTo(1000, 0, 300);
+            questionTitle.TranslateTo(3000, 0, 300);
+            await buttonLayout.TranslateTo(3000, 0, 300);
             if (questionResponse.results.Count > currentQuestion +1)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
-                questionsCor.Text = QuestionsCorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop();
             }
@@ -241,7 +248,6 @@ public partial class Game : ContentPage
                 button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
-                questionsIncor.Text = QuestionsIncorrect.ToString();
                 questionTitle.Text = "";
                 GameLoop();
             }

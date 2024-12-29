@@ -51,7 +51,7 @@ public partial class Results : ContentPage
                     if (prev[count].RanOut)
                         label.Text += "Ran out of Questions";
                     else
-                        label.Text += $"Hot Potato was: {prev[count].HotPotato}";
+                        label.Text += $"Hot Potato was: {prev[count].HotPotato}\n";
                     label.Text += $"Total Questions Answered Correctly: {prev[count].CorrectAnswers}\n" +
                                   $"Total Questions Answered Incorrectly: {prev[count].IncorrectAnswers}\n" +
                                   $"Timer Length: {prev[count].Timer}\n" +
@@ -106,7 +106,9 @@ public partial class Results : ContentPage
                     TextColor = Colors.White,
                     VerticalOptions = LayoutOptions.Center,
                     FontFamily = "RubikDirt"
+                    
                 };
+                button.Clicked += InspectGame;
 
                 horLayout.Children.Add(label);
                 horLayout.Children.Add(button);
@@ -128,7 +130,7 @@ public partial class Results : ContentPage
             string[] jsonObjects = jsonString.Split("\n");
             return jsonObjects;
         }
-        return new string[] { };
+        return [];
     }
 
     private void TimedSP(object sender, EventArgs e)
@@ -153,6 +155,17 @@ public partial class Results : ContentPage
 
     private void SetQuestionsButton(object sender, EventArgs e)
     {
-        // Handle setting questions specific to this mode (if needed)
+        DisplayResults("SPSet.json", "Set Questions");
+    }
+
+    private async void InspectGame(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        VerticalStackLayout frame = (VerticalStackLayout)button.Parent;
+        foreach (var child in frame.Children)
+        {
+            if(child is Label label)
+            await Navigation.PushAsync(new InspectGame(label.Text));
+        }
     }
 }

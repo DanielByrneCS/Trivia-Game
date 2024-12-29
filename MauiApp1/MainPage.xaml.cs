@@ -117,18 +117,30 @@ namespace MauiApp1
                     if (timed)
                     {
                         string playerName = await DisplayPromptAsync("Player ", "Enter player name:");
-                        await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex, playerName));
-
+                        if (playerName != null && playerName != "")
+                        {
+                            await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, playerName));
+                        }
+                        else
+                        {
+                            playerName = "Player 1";
+                            await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex, playerName));
+                        }
                     }
                     else if(numQuestions != 0)
                     {
                         string playerName = await DisplayPromptAsync("Player ", "Enter player name:");
                         // SP set Questions
-                        await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, playerName));
+                        if (playerName != null && playerName != "") {
+                            await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, playerName));
+                        }
+                        else
+                            playerName = "Player 1";
+                        
                     }
                         
                     else
-                        await DisplayAlert("Invalid Input", "Please enter all settings correctly.", "Return to Selection");
+                        await DisplayAlert("Invalid Input", "Please enter all Gamemode & Settings correctly.", "Return to Selection");
                 }
                 else if(difficulty.SelectedItem.ToString() != null && type.SelectedItem.ToString() != null && selectedPlayers != 1)
                 {
@@ -224,6 +236,12 @@ namespace MauiApp1
                 {
                     string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
                     playerNames[i] = playerName;
+                    if (playerNames[i] == null || playerNames[i] == "")
+                    {
+                        await DisplayAlert("Invalid Input", "Please enter all player names", "Return to menu");
+                        await GetNames();
+                        break;
+                    }
                     checkNames++;
                 }
             }
@@ -235,6 +253,12 @@ namespace MauiApp1
                     string playerName = await DisplayPromptAsync("Player " + (i + 1), "Enter player name:");
                     playerNames[i] = playerName;
                     checkNames++;
+                    if (playerNames[i] == null || playerNames[i] == "")
+                    {
+                        await DisplayAlert("Invalid Input", "Please enter all player names", "Return to menu");
+                        await GetNames();
+                        break;
+                    }
                 }
             }
         }
@@ -251,6 +275,7 @@ namespace MauiApp1
                 {
                     buttonGrid.IsVisible = true;
                     timerTip.IsVisible = false;
+                    questionLabel.IsVisible = true;
                     gameMode = data;
                 }
                 else
@@ -258,6 +283,7 @@ namespace MauiApp1
                     timed = true;
                     buttonGrid.IsVisible = false;
                     timerTip.IsVisible = true;
+                    questionLabel.IsVisible = false;
                     numQuestions = 0;
                     gameMode = data;
                 }
