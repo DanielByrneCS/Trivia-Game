@@ -3,6 +3,7 @@ using System.Xml.Linq;
 
 namespace MauiApp1
 {
+    // https://github.com/DanielByrneCS/Trivia-Game
     public partial class MainPage : ContentPage
     {
         private Button selectedButton;
@@ -119,7 +120,7 @@ namespace MauiApp1
                         string playerName = await DisplayPromptAsync("Player ", "Enter player name:");
                         if (playerName != null && playerName != "")
                         {
-                            await Navigation.PushAsync(new Game(difficulty.SelectedIndex, numQuestions, type.SelectedIndex, playerName));
+                            await Navigation.PushAsync(new TimedGame(difficulty.SelectedIndex, type.SelectedIndex, playerName));
                         }
                         else
                         {

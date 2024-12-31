@@ -289,12 +289,13 @@ public partial class Game : ContentPage
                 
                 // Below line from Json2CSharp 
                 questionResponse = JsonSerializer.Deserialize<QuestionResponse>(contents);
-                
+                return;
             }
         }
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error in loading Questions", ex.Message, "OK");
+            return;
         }
     
     }

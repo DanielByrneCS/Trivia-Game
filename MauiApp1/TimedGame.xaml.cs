@@ -253,7 +253,7 @@ public partial class TimedGame : ContentPage
                 QuestionsCorrect++;
                 questionTitle.Text = "";
 
-                if (questionResponse.results.Count > currentQuestion + 1)
+                if (questionResponse.results.Count < currentQuestion + 1)
                 {
                     GameEnd(true);
                 }
@@ -281,7 +281,7 @@ public partial class TimedGame : ContentPage
                 button.BackgroundColor = Colors.Red;
                 questionTitle.Text = "";
                 QuestionsIncorrect++;
-                if (questionResponse.results.Count > currentQuestion + 1)
+                if (questionResponse.results.Count < currentQuestion + 1)
                     GameEnd(true);
                 else
                     GameEnd();

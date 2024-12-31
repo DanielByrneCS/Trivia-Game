@@ -18,7 +18,7 @@ public partial class ResultsPage : ContentPage
     {
         InitializeComponent();
         resultLabel.Text = "Total questions Correct: " + questionsCorrect;
-        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nTotal Questions Incorrect: " + questionsIncorrect + " incorrect!";
         resultLabel.Text += "\nDifficulty: " + difficulty;
         resultLabel.Text += "\nQuestion Type: " + questionType;
         resultLabel.Text += "\nHot Potato: " + hotPotato + "\nPlayer List:";
@@ -62,7 +62,7 @@ public partial class ResultsPage : ContentPage
     {
         InitializeComponent();
         resultLabel.Text = "Total questions Correct: " + questionsCorrect;
-        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nTotal Questions Incorrect: " + questionsIncorrect + " incorrect!";
         resultLabel.Text += "\nDifficulty: " + difficulty;
         resultLabel.Text += "\nQuestion Type: " + questionType;
         resultLabel.Text += "\nHot Potato: " + hotPotato + "\nPlayer List:";
@@ -107,7 +107,7 @@ public partial class ResultsPage : ContentPage
     {
         InitializeComponent();
         resultLabel.Text = "Total questions Correct: " + questionsCorrect;
-        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nTotal Questions Incorrect: " + questionsIncorrect + " incorrect!";
         resultLabel.Text += "\nDifficulty: " + difficulty;
         resultLabel.Text += "\nQuestion Type: " + questionType;
         resultLabel.Text += "\nPlayer Name: " + name;
@@ -147,7 +147,7 @@ public partial class ResultsPage : ContentPage
     {
         InitializeComponent();
         resultLabel.Text = "Total questions Correct: " + questionsCorrect;
-        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nTotal Questions Incorrect: " + questionsIncorrect + " incorrect!";
         resultLabel.Text += "\nDifficulty: " + difficulty;
         resultLabel.Text += "\nQuestion Type: " + questionType;
         resultLabel.Text += "\nPlayer Name: " + name;
@@ -190,7 +190,7 @@ public partial class ResultsPage : ContentPage
     {
         InitializeComponent();
         resultLabel.Text = "Total questions Correct: " + questionsCorrect;
-        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nTotal Questions Incorrect: " + questionsIncorrect + " incorrect!";
         resultLabel.Text += "\nDifficulty: " + difficulty;
         resultLabel.Text += "\nQuestion Type: " + questionType;
         resultLabel.Text += "\nWinner: " + winner;
