@@ -274,9 +274,8 @@ public partial class TimedGame : ContentPage
                 else
                     GameEnd();
 
-            }
-        }
-    }
+
+  
 
   
     private async void GameEnd(bool ranOut)
