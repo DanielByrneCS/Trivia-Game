@@ -84,7 +84,7 @@
                     Text="Game Modes" 
                     Background="{StaticResource SecondaryBackgroundColor}"
                     TextColor="{DynamicResource PrimaryTextColor}"/>
-            <Grid Margin="0" IsVisible="False" x:Name="buttonGrid">
+            <Grid Margin="0" IsVisible="False" x:Name="buttonGrid" HorizontalOptions="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />

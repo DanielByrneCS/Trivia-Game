@@ -258,8 +258,7 @@ public partial class CoopGame : ContentPage
 
     private async void GameEnd()
     {
-        await Navigation.PushAsync(new ResultsPage(QuestionsCorrect, QuestionsIncorrect, names, gameMode));
-
+        await Navigation.PushAsync(new ResultsPage(QuestionsCorrect, QuestionsIncorrect, difficultyLevels[difficulty], NumberOfQuestions, typeDict[questionType], names, gameMode));
     }
 
 

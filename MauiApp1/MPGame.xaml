@@ -49,14 +49,11 @@
            HorizontalOptions="Center"
            MaximumWidthRequest="390"
            HeightRequest="290" />
-        <VerticalStackLayout BackgroundColor="Yellow">
-            <StackLayout x:Name="buttonLayout" 
+        <StackLayout x:Name="buttonLayout" 
                      HorizontalOptions="Center" 
                      VerticalOptions="Center" 
-                     Margin="10"
-                     BackgroundColor="LightGray">
-                <Button Text="Test Button"/>
-            </StackLayout>
-        </VerticalStackLayout>
+                     Margin="10">
+        </StackLayout>
+
     </VerticalStackLayout>
 </ContentPage>

@@ -9,6 +9,8 @@ public partial class MPTimedGame : ContentPage
 {
     private IAudioPlayer correctAudio;
     private IAudioPlayer incorrectAudio;
+    private IAudioPlayer ticking;
+    private IAudioPlayer riser;
 
 
     // Dictionary helps convert int difficulty to string for api url creation
@@ -31,7 +33,7 @@ public partial class MPTimedGame : ContentPage
     Color primaryTextColor;
     Color secondaryBackgroundColor;
     bool ranOut = false;
-
+    bool riserBool = false;
     int QuestionsCorrect, QuestionsIncorrect, currentQuestion;
 
 
@@ -92,8 +94,17 @@ public partial class MPTimedGame : ContentPage
         {
             Interval = 1000
         };
+        
         timer.Elapsed += (s, e) =>
         {
+
+            ticking.Play();
+            if(count < 4 && !riserBool)
+            {
+                riserBool = true;
+                riser.Play();
+            }
+                
             --Count;
             if (Count == 0)
             {
@@ -173,14 +184,18 @@ public partial class MPTimedGame : ContentPage
         currentPlayerLabel.Text = "Current Player: " + names[currentPlayer];
         if (currentQuestion == 0)
         {
+            IsBusy = true;
+            ticking = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("ticking.mp3"));
+            riser = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("riser.mp3"));
+            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
+            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
+
             await GetQuestions();
             questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
             questionTitle.Text = questionResponse.results[currentQuestion].question;
-            IsBusy = true;
+            
             // Gives time to load
             await Task.Delay(1000);
-            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
-            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
             
             await questionTitle.TranslateTo(0, 1000, 0);
             buttonLayout.TranslateTo(0, 1000, 0);

@@ -54,7 +54,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Resources\Sounds\**" />
+	  <Compile Remove="Resources\Sounds\**" />
+	  <EmbeddedResource Remove="Resources\Sounds\**" />
+	  <MauiCss Remove="Resources\Sounds\**" />
+	  <MauiXaml Remove="Resources\Sounds\**" />
+	  <None Remove="Resources\Sounds\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\AppIcon\appicon.svg" />
+	  <None Remove="Resources\Raw\riser.mp3" />
+	  <None Remove="Resources\Raw\ticking.mp3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -131,10 +142,6 @@
 	  <MauiXaml Update="Settings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Resources\Sounds\" />
 	</ItemGroup>
 
 </Project>

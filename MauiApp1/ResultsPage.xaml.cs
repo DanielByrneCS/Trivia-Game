@@ -6,13 +6,25 @@ namespace MauiApp1;
 
 public partial class ResultsPage : ContentPage
 {
-	
+    protected override bool OnBackButtonPressed()
+    {
+        // Your custom logic here (e.g., show a confirmation dialog)
+        return true; // Disable default back button behavior
+    }
 
     // MP Timed Game below (Hot potato)
-    
+
     public ResultsPage(int timer, string hotPotato, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType, List<string> playerList)
     {
         InitializeComponent();
+        resultLabel.Text = "Total questions Correct: " + questionsCorrect;
+        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nHot Potato: " + hotPotato + "\nPlayer List:";
+        for (int i = 0; i < playerList.Count; i++)
+            resultLabel.Text += "\nPlayer " + (i + 1) + ": " + playerList[i];
+        resultLabel.Text += "\nTimer Length: " + timer;
         // Creates object to append to json
         var result = new
         {
@@ -49,6 +61,15 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int timer, string hotPotato, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType, List<string> playerList, bool ranOut)
     {
         InitializeComponent();
+        resultLabel.Text = "Total questions Correct: " + questionsCorrect;
+        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nHot Potato: " + hotPotato + "\nPlayer List:";
+        for (int i = 0; i < playerList.Count; i++)
+            resultLabel.Text += "\nPlayer " + (i + 1) + ": " + playerList[i];
+        resultLabel.Text += "\nRan out of time (50 question limit)!";
+        resultLabel.Text += "\nTimer Length: " + timer;
         // Creates object to append to json
         var result = new
         {
@@ -85,8 +106,12 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int timer, string name, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType)
     {
         InitializeComponent();
-        questionsCorrectLabel.Text += questionsIncorrect.ToString();
-        questionsIncorrectLabel.Text += questionsIncorrect.ToString();
+        resultLabel.Text = "Total questions Correct: " + questionsCorrect;
+        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nPlayer Name: " + name;
+        resultLabel.Text += "\nTimer Length: " + timer;
         // Creates object to append to json
         var result = new
         {
@@ -121,8 +146,13 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int timer, string name, int questionsCorrect, int questionsIncorrect, string difficulty, string questionType, bool ranOut)
     {
         InitializeComponent();
-        questionsCorrectLabel.Text += questionsIncorrect.ToString();
-        questionsIncorrectLabel.Text += questionsIncorrect.ToString();
+        resultLabel.Text = "Total questions Correct: " + questionsCorrect;
+        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nPlayer Name: " + name;
+        resultLabel.Text += "\nYou won! You hit 50 questions!";
+        resultLabel.Text += "\nTimer Length: " + timer;
         // Creates object to append to json
         var result = new
         {
@@ -159,8 +189,12 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int questionsCorrect, int questionsIncorrect, string difficulty , string numberOfQuestions, string questionType, List<string> names, string winner)
     {
         InitializeComponent();
-        questionsCorrectLabel.Text += questionsCorrect.ToString();
-        questionsIncorrectLabel.Text += questionsIncorrect.ToString();
+        resultLabel.Text = "Total questions Correct: " + questionsCorrect;
+        resultLabel.Text += "\nTotal Questions Incorrect " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nWinner: " + winner;
+  
         // Creates object to append to json
         var result = new
         {
@@ -194,6 +228,11 @@ public partial class ResultsPage : ContentPage
     public ResultsPage(int questionsCorrect, int questionsIncorrect, string difficulty, string numberOfQuestions, string questionType, string name)
     {
         InitializeComponent();
+        resultLabel.Text = "You got " + questionsCorrect + " out of " + numberOfQuestions + " correct!";
+        resultLabel.Text += "\nYou got " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "\nPlayer Name: " + name;
         // Creates object to append to json
         var result = new
         {
@@ -221,15 +260,25 @@ public partial class ResultsPage : ContentPage
         }
     }
     // Gamemode 5 (co-op)
-    public ResultsPage(int questionsCorrect, int questionsIncorrect, List<string> names, int gameMode)
+    public ResultsPage(int questionsCorrect, int questionsIncorrect, string difficulty, string numberOfQuestions, string questionType, List<string> names, int gameMode)
     {
         InitializeComponent();
+        resultLabel.Text = "You got " + questionsCorrect + " out of " + numberOfQuestions + " correct!";
+        resultLabel.Text += "\nYou got " + questionsIncorrect + " incorrect!";
+        resultLabel.Text += "\nDifficulty: " + difficulty;
+        resultLabel.Text += "\nQuestion Type: " + questionType;
+        resultLabel.Text += "Player List:";
+        for (int i = 0; i < names.Count; i++)
+            resultLabel.Text += "\nPlayer " + (i + 1) + ": " + names[i];
         // Creates object to append to json
         var result = new
         {
             CorrectAnswers = questionsCorrect,
             IncorrectAnswers = questionsIncorrect,
+            NumberOfQuestions = numberOfQuestions,
             Players = names,
+            Difficulty = difficulty,
+            Type = questionType,
             GameMode = gameMode
         };
 

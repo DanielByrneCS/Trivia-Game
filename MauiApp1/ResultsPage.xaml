@@ -4,9 +4,8 @@
              x:Class="MauiApp1.ResultsPage"
              Title="ResultsPage">
     <VerticalStackLayout>
-        <Label x:Name="questionsCorrectLabel"
-             Text="Questions Correct: " FontSize="Large"/>
-        <Label x:Name="questionsIncorrectLabel"
-               Text="Questions Incorrect: " FontSize="Large"/>
+        <Label x:Name="resultLabel" Text="" FontSize="Header" FontFamily="ApeMount" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource PrimaryTextColor}"/>
+        <Label Text="Screenshot this and share with a friend!" FontSize="Header" FontFamily="ApeMount" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Purple"/>
+
     </VerticalStackLayout>
 </ContentPage>

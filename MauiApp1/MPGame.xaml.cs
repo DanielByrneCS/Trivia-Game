@@ -153,7 +153,6 @@ public partial class MPGame : ContentPage
 
         else
         {
-            //await GetQuestions();
             questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
 
             questionTitle.Text = questionResponse.results[currentQuestion].question;
@@ -165,7 +164,7 @@ public partial class MPGame : ContentPage
             await buttonLayout.TranslateTo(0, 0, 400);
 
         }
-        //buttonLayout.Children.Clear();
+        buttonLayout.Children.Clear();
         IsBusy = false;
         List<string> possibleAnswers = questionResponse.results[currentQuestion].incorrect_answers;
         possibleAnswers.Add(questionResponse.results[currentQuestion].correct_answer);
@@ -181,13 +180,7 @@ public partial class MPGame : ContentPage
             secondaryBackgroundColor = Color.FromArgb("FF6347");
 
         }
-        HorizontalStackLayout view1 = new HorizontalStackLayout()
-        {
-            HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center,
-            Margin = 10,
-            HeightRequest = 100
-        };
+        HorizontalStackLayout view1 = new HorizontalStackLayout();
         HorizontalStackLayout view2 = new HorizontalStackLayout();
         // Line below gets rid of &nbsp; and all those html formatting things from the json
 
@@ -201,29 +194,26 @@ public partial class MPGame : ContentPage
                 Text = possibleAnswers[j],
                 TextColor = primaryTextColor,
                 BackgroundColor = secondaryBackgroundColor,
-                WidthRequest = 200,
-                HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10)
+                FontSize = 30,
+                Margin = 10
             };
             answer.Clicked += AnswerClicked;
             // Aligns first 2 to first row to make a 2x2 grid for mcq(or both horizontal for true / false)
             if (j <= 1)
+            {
                 view1.Children.Add(answer);
+            }
             else
+            {
                 view2.Children.Add(answer);
-
+            }
         }
-        questionTitle.IsVisible = false;
+        // Android seems to have a bug with rendering the buttons, I spent christmas week troubleshooting this for nothing. It renders the stacklayout however any labels or buttons placed dynamically
+        // inside the layout simply do not render. after hours of troubleshooting was unable to figure out
+        // They are visible in the live tree view when running
         buttonLayout.Children.Add(view1);
         buttonLayout.Children.Add(view2);
-        buttonLayout.IsVisible = true;
-
-        
-
-
-
     }
     private async void AnswerClicked(object sender, EventArgs e)
     {

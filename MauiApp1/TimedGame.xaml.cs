@@ -7,6 +7,8 @@ public partial class TimedGame : ContentPage
 {
     private IAudioPlayer correctAudio;
     private IAudioPlayer incorrectAudio;
+    private IAudioPlayer ticking;
+    private IAudioPlayer riser;
     public TimedGame(int difficulty, int type, string playerName)
     {
         InitializeComponent();
@@ -38,6 +40,7 @@ public partial class TimedGame : ContentPage
         { 1, "boolean" },
     };
     bool isRunning = false;
+    bool riserBool = false;
     public bool IsRunning
     {
         get => isRunning;
@@ -87,6 +90,12 @@ public partial class TimedGame : ContentPage
         };
         timer.Elapsed += (s, e) =>
         {
+            ticking.Play();
+            if (count < 4 && !riserBool)
+            {
+                riserBool = true;
+                riser.Play();
+            }
             --Count;
             if(Count == 0)
                 timer.Stop();
@@ -140,12 +149,15 @@ public partial class TimedGame : ContentPage
         if (currentQuestion == 0)
         {
             IsBusy = true;
+            ticking = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("ticking.mp3"));
+            riser = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("riser.mp3"));
+            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
+            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
+
             await GetQuestions(difficulty, questionType);
             await Task.Delay(1000);
             questionResponse.results[currentQuestion].question = System.Web.HttpUtility.HtmlDecode(questionResponse.results[currentQuestion].question);
             questionTitle.Text = questionResponse.results[currentQuestion].question;
-            correctAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("correct.mp3"));
-            incorrectAudio = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("incorrect.mp3"));
             questionTitle.TranslateTo(0, 1000, 0);
             buttonLayout.TranslateTo(0, 1000, 0);
             questionTitle.TranslateTo(0, 0, 400);
@@ -213,7 +225,7 @@ public partial class TimedGame : ContentPage
     }
     private async void AnswerClicked(object sender, EventArgs e)
     {
-      
+
         Button button = (Button)sender;
 
         StackLayout buttonLayout = (StackLayout)button.Parent.Parent;
@@ -225,14 +237,14 @@ public partial class TimedGame : ContentPage
             correctAudio.Play();
             questionTitle.TranslateTo(3000, 0, 300);
             await buttonLayout.TranslateTo(3000, 0, 300);
-            if (questionResponse.results.Count > currentQuestion +1 && timer.Enabled)
+            if (questionResponse.results.Count > currentQuestion + 1 && timer.Enabled)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Green;
                 currentQuestion++;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                GameLoop(1,1);
+                GameLoop(1, 1);
             }
             else
             {
@@ -240,14 +252,14 @@ public partial class TimedGame : ContentPage
                 button.BackgroundColor = Colors.Green;
                 QuestionsCorrect++;
                 questionTitle.Text = "";
-                
+
                 if (questionResponse.results.Count > currentQuestion + 1)
                 {
                     GameEnd(true);
                 }
                 else
                     GameEnd();
-             
+
             }
         }
         else
@@ -255,14 +267,14 @@ public partial class TimedGame : ContentPage
             incorrectAudio.Play();
             questionTitle.TranslateTo(0, 1000, 300);
             await buttonLayout.TranslateTo(0, 1000, 300);
-            if (questionResponse.results.Count > currentQuestion +1 && timer.Enabled)
+            if (questionResponse.results.Count > currentQuestion + 1 && timer.Enabled)
             {
                 IsBusy = true;
                 button.BackgroundColor = Colors.Red;
                 currentQuestion++;
                 QuestionsIncorrect++;
                 questionTitle.Text = "";
-                GameLoop(1,1);
+                GameLoop(1, 1);
             }
             else
             {
@@ -273,11 +285,10 @@ public partial class TimedGame : ContentPage
                     GameEnd(true);
                 else
                     GameEnd();
+            }
+        }
+    }
 
-
-  
-
-  
     private async void GameEnd(bool ranOut)
     {
         // Occurs when 50 questions are answered as opposed to time running out, person who answered last question will be hot potato
@@ -323,3 +334,4 @@ public partial class TimedGame : ContentPage
 
 
 }
+
