@@ -36,8 +36,3 @@ The project utilizes an external API to fetch trivia questions Thanks to Open Tr
     UI Customization: Modify the XAML files to customize the appearance of the app.
     Game Logic: Adjust the game logic in the C# code to introduce new features or modify existing ones.
     API Integration: Update the API integration to use a different API or modify the request parameters.
-
-# Future Enhancements
-
-    ~~See Previous Games: Implement to track high scores.
-    Timed runs: To be yet implemented~~
